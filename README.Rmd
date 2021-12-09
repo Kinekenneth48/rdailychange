@@ -16,40 +16,121 @@ knitr::opts_chunk$set(
 # rdailychange
 
 <!-- badges: start -->
+
 <!-- badges: end -->
 
-The goal of rdailychange is to ...
+## Overview
+
+The goal of rdailychange is to allow the user to mimic the shedding phenomenon 
+of snow on solar panels by extracting sequential changes in snow water 
+equivalent (SWE). Day-1 observations are sequential daily changes in SWE.
+Day-2 observations assume that the shedding phenomenon occurs after two days. 
+Hence, Day-2 observations are a sum of two consecutive days of positive 
+sequential changes. Day-3, Day-4 and Day-5 observations are a sum of three,
+four and five consecutive sequential daily changes. In addition, they allow 
+for at most one middle sequential change to be a negative value as long as the 
+sum of the other sequential daily changes are greater than the negative 
+change. 
+
+
 
 ## Installation
 
-You can install the development version of rdailychange from [GitHub](https://github.com/) with:
+### Development version
+
+This package is still under development, to get a bug fix or to use a feature 
+from the development version, you can install and load
+the development version from [GitHub](https://github.com/) with:
+
 
 ``` r
 # install.packages("devtools")
 devtools::install_github("Kinekenneth48/rdailychange")
+library(rdailychange)
 ```
 
-## Example
+## Package Contents
 
-This is a basic example which shows you how to solve a common problem:
+The package revolves around three main function named *extract_observations*,
+*fit_observations*, and *plot_events*. Documentation about these functions can be 
+obtained by entering the following in the R console
 
 ```{r example}
-library(rdailychange)
-## basic example code
+?rdailychange::extract_observations
+?rdailychange::fit_observations
+?rdailychange::plot_events
+
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+The package also contains a sample dataset of snow load measurements(SWE) 
+of 9 weather stations from 1951 to 2020 snow year. The data 
+is available by installing the rdailychange package and invoking the command.
 
-```{r cars}
-summary(cars)
+```{r }
+data("sample_data")
+sample_data = force(sample_data)
+
+dim(sample_data)
 ```
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/v1/examples>.
 
-You can also embed plots, for example:
+## Package Usage
+Once installed, this package can extract snow load values that mimic 
+shedding phenomenon of snow on solar panel and plot the mean recurrence interval
+(MRI) per weather stations. The following example makes use of the *sample_data*
+dataset. The example will following the workflow of extracting the Day-X method
+observations, fitting those observations to either a generalized extreme 
+value distribution or generalized Pareto distribution, and finally visualizing 
+the MRI values from the weather stations. This example will focus on Day-1 method,
+however, the same worflow can be applied to Day-2,-3,-4, and -5 methods. 
 
-```{r pressure, echo = FALSE}
-plot(pressure)
+
+### Extract Day-1 method observations from the 7 weather stations
+After extracting Day-1 method observations, a information about a 
+typical weather stations will include the Day-1 observations and the 
+annual maximum load for each snow year.
+
+```{r}
+d1 = rdailychange::extract_observations(sample_data, day=1)
+
+#after
+d1$USW00023062
+
 ```
 
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
+
+### Fit the observations 
+Once the observations are extracted, we can now fit a extreme value distribution
+to the observations. The package can fit the Generalized Extreme Value(GEV) or
+the Generalized Pareto distribution (GP), which are the two main distributions
+for fitting extreme values. These distributions are preferred because of their
+ability to better fit extreme values of observations. The return value will
+include 50-year, 100-year, and 500-year MRI value from the Day-1 method along 
+side their ratio with respective to the annual data.
+
+```{r}
+d1_parm = rdailychange::fit_observations(d1, type = "GEV")
+d1_parm 
+```
+
+
+### Visualize MRI values
+Finally, we can visualize the 50-year MRI values for each weather station.
+
+```{r}
+rdailychange::plot_events(d1_parm)
+```
+
+
+
+ `devtools::build_readme()` 
+
+## Getting help
+
+If you encounter a clear bug, please file an issue with a minimal reproducible 
+example on [GitHub](https://github.com/Kinekenneth48/carsimr.pomeyie/issues).
+
+---
+Please note that this package is released under the [MIT License](https://www.r-project.org/Licenses/MIT).
+By participating or using this package you agree to abide by the terms of 
+the license.
