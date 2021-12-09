@@ -16,7 +16,7 @@
 #' @export
 
 
-plot_events <- function(df, size = 2.5, event = 50, annual = FALSE) {
+plot.dailychange  <- function(df, size = 2.5, event = 50, annual = FALSE) {
   if (annual == FALSE & event == 50) {
     point_sf <- sf::st_as_sf(df,
       coords = c("LONGITUDE", "LATITUDE"),

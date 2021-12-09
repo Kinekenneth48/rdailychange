@@ -1,0 +1,530 @@
+---
+title: "maps"
+author: "Kenneth Kin Pomeyie"
+date: "8/18/2021"
+output: html_document
+---
+
+#Load packages and functions
+```{r}
+library(rnaturalearth) #returns world coastline at specified scale
+library(albersusa)  # returns U.S. state composite map  #devtools::install_github("hrbrmstr/albersusa")
+library(sf)
+library(tidyverse)
+
+
+Remove_na_cols <- function(data, desiredCols) {
+  completeVec <- complete.cases(data[, desiredCols])
+  return(data[completeVec, ])
+}
+```
+
+
+#Load data
+```{r}
+#load MRI data of respective stations
+#MRI = COMBINED_D123
+MRI = read.csv("../data/COMBINED_D123.csv")
+
+stations = read.csv("../data/stations.csv")
+stations <- stations %>%
+  dplyr::select(ID, LONGITUDE, LATITUDE, STATE)
+
+combined_geo <- left_join(x = MRI, y = stations, by = "ID") %>%
+  dplyr::select(ID, NAME, STATE, LONGITUDE, LATITUDE, NO_OF_OBSERVATIONS, DAY_CHANGE, EVENT50, EVENT50_RATIO, EVENT100, EVENT500)
+
+combined_geo
+```
+
+
+
+#get coastal and world map as spatial objects
+```{r}
+coast_sf = ne_coastline(scale = "medium", returnclass = "sf")
+countries_sf = ne_countries(scale = "medium", returnclass = "sf")
+```
+
+
+
+#######################################################################################################################################
+########################################DAY 1###################################################################################
+#######################################################################################################################################
+
+#Subset for the 50 year event
+```{r}
+geodata1 = combined_geo %>% 
+  filter(DAY_CHANGE == 1) %>% 
+  dplyr::select(ID, NAME, LONGITUDE, LATITUDE, EVENT50) %>% 
+  mutate(EVENT50 = as.integer(EVENT50)) 
+geodata1
+```
+
+
+#create sf object with geodata
+```{r}
+points_sf1 = st_as_sf(geodata1, coords = c("LONGITUDE", "LATITUDE"), crs = 4326)
+```
+
+
+#Day-1 CHANGE: Plot of 50-year event
+```{r}
+ggplot() +
+  geom_sf(data = usa_sf())+
+  geom_sf(data = points_sf1, aes( EVENT50, colour = cut(EVENT50, c(1, 5, 10, 15, 20, 60 ))), alpha =1, size =2) +
+  coord_sf(xlim=c(-125, -67), ylim=c(20,50))+
+  scale_color_manual(name = "MRI",
+                     values = c( "#440154FF",
+                                   "#3B528BFF",
+                                 "#21908CFF",
+                                "#5DC863FF",
+                                   "#FDE725FF"),
+                     labels = c("(1, 5]", "(5, 10]","(10, 15]","(15, 20]", "(20, 55]")) +
+  ggtitle("Day-1 CHANGE: Plot of 50-year event for FOS")
+```
+
+
+
+
+#Subset for the 100 year event
+```{r}
+geodata100_1 = combined_geo %>% 
+  filter(DAY_CHANGE == 1) %>% 
+  dplyr::select(ID, NAME, LONGITUDE, LATITUDE, EVENT100) %>% 
+  mutate(EVENT100 = as.integer(EVENT100)) 
+geodata100_1
+```
+
+
+
+```{r}
+#create sf object with geodata
+points_sf100_1 = st_as_sf(geodata100_1, coords = c("LONGITUDE", "LATITUDE" ), crs = 4326)
+```
+
+
+#Day-1 CHANGE: Plot of 100-year event
+```{r}
+ggplot() +
+  geom_sf(data = usa_sf())+
+  geom_sf(data = points_sf100_1, aes( EVENT100, colour = cut(EVENT100, c(1, 5, 10, 15, 20, 92 ))), alpha =1, size =2) +
+  coord_sf(xlim=c(-125, -67), ylim=c(20,50))+
+  scale_color_manual(name = "MRI",
+                     values = c( "#440154FF",
+                                   "#3B528BFF",
+                                 "#21908CFF",
+                                "#5DC863FF",
+                                   "#FDE725FF"),
+                    labels = c("(1, 5]", "(5, 10]","(10, 15]","(15, 20]", "(20, 91]")) +
+  ggtitle("Day-1 CHANGE: Plot of 100-year event for FOS")
+```
+
+
+
+
+
+
+
+#Subset for the 500 year event
+```{r}
+geodata500_1 = combined_geo %>% 
+  filter(DAY_CHANGE == 1) %>% 
+  dplyr::select(ID, NAME, LONGITUDE, LATITUDE, EVENT500) %>% 
+  mutate(EVENT500 = as.integer(EVENT500)) 
+geodata500_1
+```
+
+
+
+
+```{r}
+#create sf object with geodata
+points_sf500_1 = st_as_sf(geodata500_1, coords = c("LONGITUDE", "LATITUDE" ), crs = 4326)
+```
+
+
+#Day-1 CHANGE: Plot of 500-year event
+```{r}
+
+ggplot() +
+  geom_sf(data = usa_sf())+
+  geom_sf(data = points_sf500_1, aes( EVENT500, colour = cut(EVENT500, c(1, 5, 10, 15, 20, 286 ))), alpha =1, size =2) +
+  coord_sf(xlim=c(-125, -67), ylim=c(20,50))+
+ scale_color_manual(name = "MRI",
+                     values = c( "#440154FF",
+                                   "#3B528BFF",
+                                 "#21908CFF",
+                                "#5DC863FF",
+                                   "#FDE725FF"),
+                     labels = c("(1, 5]", "(5, 10]","(10, 15]","(15, 20]", "(20, 286]")) +
+  ggtitle("Day-1 CHANGE: Plot of 500-year event for FOS")
+```
+
+
+
+
+
+
+#Subset for the 50 year ratio event
+```{r}
+geodata_r1 = combined_geo %>% 
+  filter(DAY_CHANGE == 1) %>% 
+  dplyr::select(ID, NAME, LONGITUDE, LATITUDE, EVENT50_RATIO) %>%
+  filter( EVENT50_RATIO >0)
+
+geodata_r1 
+```
+
+
+```{r}
+#create sf object with geodata
+points_sf_r1 = st_as_sf(geodata_r1, coords = c("LONGITUDE", "LATITUDE" ), crs = 4326)
+```
+
+
+#Day-1 CHANGE: Plot of EVENT50_RATIO
+```{r}
+ggplot() +
+  geom_sf(data = usa_sf())+
+  geom_sf(data = points_sf_r1, aes( EVENT50_RATIO, colour = cut(EVENT50_RATIO, c(0, .2, .4, .6,0.8, 1))), alpha =1, size =2) +
+  coord_sf(xlim=c(-125, -67), ylim=c(20,50))+
+  scale_color_manual(name = "RATIO",
+                     values = c("#440154FF",
+                                   "#3B528BFF",
+                                 "#21908CFF",
+                                "#5DC863FF",
+                                   "#FDE725FF"),
+                     labels = c("(0, 0.2]", "(0.2, 0.4]","(0.4, 0.6]","(0.6, 0.8]" ,"(0.8, 1]")) +
+  ggtitle("Day-1 CHANGE: Plot of EVENT50_RATIO for FOS")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#######################################################################################################################################
+########################################DAY 2###################################################################################
+#######################################################################################################################################
+
+```{r}
+geodata2 = combined_geo %>% 
+  filter(DAY_CHANGE == 2) %>% 
+  dplyr::select(ID, NAME, LONGITUDE, LATITUDE, EVENT50) %>% 
+  mutate(EVENT50 = as.integer(EVENT50)) 
+geodata2
+```
+
+
+#create sf object with geodata
+```{r}
+points_sf2 = st_as_sf(geodata2, coords = c("LONGITUDE", "LATITUDE" ), crs = 4326)
+```
+
+
+#Day-2 CHANGE: Plot of 50-year event
+```{r}
+ggplot() +
+  geom_sf(data = usa_sf())+
+  geom_sf(data = points_sf2, aes( EVENT50, colour = cut(EVENT50, c(1, 5, 10, 15, 20, 75 ))), alpha =1, size =2) +
+  coord_sf(xlim=c(-125, -67), ylim=c(20,50))+
+  scale_color_manual(name = "MRI",
+                     values = c( "#440154FF",
+                                   "#3B528BFF",
+                                 "#21908CFF",
+                                "#5DC863FF",
+                                   "#FDE725FF"),
+                     labels = c("(1, 5]", "(5, 10]","(10, 15]","(15, 20]", "(20, 75]")) +
+  ggtitle("Day-2 CHANGE: Plot of 50-year event for FOS")
+```
+
+
+
+
+
+#Subset for the 100 year event
+```{r}
+geodata100_2 = combined_geo %>% 
+  filter(DAY_CHANGE == 2) %>% 
+  dplyr::select(ID, NAME, LONGITUDE, LATITUDE, EVENT100) %>% 
+  mutate(EVENT100 = as.integer(EVENT100)) 
+geodata100_2
+```
+
+```{r}
+#create sf object with geodata
+points_sf100_2 = st_as_sf(geodata100_2, coords = c("LONGITUDE", "LATITUDE" ), crs = 4326)
+```
+
+
+#Day-2 CHANGE: Plot of 100-year event
+```{r}
+ggplot() +
+  geom_sf(data = usa_sf())+
+  geom_sf(data = points_sf100_2, aes( EVENT100, colour = cut(EVENT100, c(1, 5, 10,15, 20, 116))), alpha =1, size =2) +
+  coord_sf(xlim=c(-125, -67), ylim=c(20,50))+
+  scale_color_manual(name = "MRI",
+                     values = c( "#440154FF",
+                                   "#3B528BFF",
+                                 "#21908CFF",
+                                "#5DC863FF",
+                                   "#FDE725FF"),
+                     labels = c("(1, 5]", "(5, 10]","(10, 15]","(15, 20]", "(20, 115]")) +
+  ggtitle("Day-2 CHANGE: Plot of 100-year event for FOS")
+```
+
+
+
+#Subset for the 500 year event
+```{r}
+geodata500_2 = combined_geo %>% 
+  filter(DAY_CHANGE == 2) %>% 
+  dplyr::select(ID, NAME, LONGITUDE, LATITUDE, EVENT500) %>% 
+  mutate(EVENT500 = as.integer(EVENT500)) 
+geodata500_2
+```
+
+
+```{r}
+#create sf object with geodata
+points_sf500_2 = st_as_sf(geodata500_2, coords = c("LONGITUDE", "LATITUDE" ), crs = 4326)
+```
+
+
+
+#Day-2 CHANGE: Plot of 500-year event
+```{r}
+
+ggplot() +
+  geom_sf(data = usa_sf())+
+  geom_sf(data = points_sf500_2, aes( EVENT500, colour = cut(EVENT500, c(1, 5, 10, 15, 40, 305))), alpha =1, size =2) +
+  coord_sf(xlim=c(-125, -67), ylim=c(20,50))+
+  scale_color_manual(name = "MRI",
+                     values = c( "#440154FF",
+                                   "#3B528BFF",
+                                 "#21908CFF",
+                                "#5DC863FF",
+                                   "#FDE725FF"),
+                     labels = c("(1, 5]", "(5, 10]","(10, 15]","(15, 40]", "(40, 305]")) +
+  ggtitle("Day-2 CHANGE: Plot of 500-year event for FOS")
+```
+
+
+
+
+
+#Subset for the 50 year ratio event
+```{r}
+geodata_r2 = combined_geo %>% 
+  filter(DAY_CHANGE == 2) %>% 
+  dplyr::select(ID, NAME, LONGITUDE, LATITUDE, EVENT50_RATIO) %>%
+  filter( EVENT50_RATIO > 0)
+
+geodata_r2 
+```
+
+
+```{r}
+#create sf object with geodata
+points_sf_r2 = st_as_sf(geodata_r2, coords = c("LONGITUDE", "LATITUDE" ), crs = 4326)
+```
+
+
+
+#Day-2 CHANGE: Plot of EVENT50_RATIO
+```{r}
+ggplot() +
+  geom_sf(data = usa_sf())+
+  geom_sf(data = points_sf_r2, aes( EVENT50_RATIO, colour = cut(EVENT50_RATIO, c(0, .2, .4, .6, 0.8, 1.5))), alpha =1, size =2) +
+  coord_sf(xlim=c(-125, -67), ylim=c(20,50))+
+  scale_color_manual(name = "RATIO",
+                     values = c( "#440154FF",
+                                   "#3B528BFF",
+                                 "#21908CFF",
+                                "#5DC863FF",
+                                   "#FDE725FF"),
+                     labels = c("(0, 0.2]", "(0.2, 0.4]","(0.4, 0.6]","(0.6, 0.8]" ,"(0.8, 1]")) +
+  ggtitle("Day-2 CHANGE: Plot of EVENT50_RATIO for FOS")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#######################################################################################################################################
+########################################DAY 3###################################################################################
+#######################################################################################################################################
+
+```{r}
+geodata3 = combined_geo %>% 
+  filter(DAY_CHANGE == 3) %>% 
+  dplyr::select(ID, NAME, LONGITUDE, LATITUDE, EVENT50) %>% 
+  mutate(EVENT50 = as.integer(EVENT50)) 
+geodata3
+```
+
+
+
+
+```{r}
+#create sf object with geodata
+points_sf3 = st_as_sf(geodata3, coords = c("LONGITUDE", "LATITUDE" ), crs = 4326)
+```
+
+
+#Day-3 CHANGE: Plot of 50-year event
+```{r}
+ggplot() +
+  geom_sf(data = usa_sf())+
+  geom_sf(data = points_sf3, aes( EVENT50, colour = cut(EVENT50, c(1, 5, 10, 15, 20, 92 ))), alpha =1, size =2) +
+  coord_sf(xlim=c(-125, -67), ylim=c(20,50))+
+  scale_color_manual(name = "MRI",
+                     values = c( "#440154FF",
+                                   "#3B528BFF",
+                                 "#21908CFF",
+                                "#5DC863FF",
+                                   "#FDE725FF"),
+                     labels = c("(1, 5]", "(5, 10]","(10, 15]","(15, 20]", "(20, 90]")) +
+  ggtitle("Day-3 CHANGE: Plot of 50-year event for FOS")
+```
+
+
+
+
+
+#Subset for the 100 year event
+```{r}
+geodata100_3 = combined_geo %>% 
+  filter(DAY_CHANGE == 3) %>% 
+  dplyr::select(ID, NAME, LONGITUDE, LATITUDE, EVENT100) %>% 
+  mutate(EVENT100 = as.integer(EVENT100)) 
+geodata100_3
+```
+
+
+
+
+```{r}
+#create sf object with geodata
+points_sf100_3 = st_as_sf(geodata100_3, coords = c("LONGITUDE", "LATITUDE" ), crs = 4326)
+```
+
+
+#Day-3 CHANGE: Plot of 100-year event
+```{r}
+ggplot() +
+  geom_sf(data = usa_sf())+
+  geom_sf(data = points_sf100_3, aes( EVENT100, colour = cut(EVENT100, c(0, 5, 10, 15, 20, 140  ))), alpha =1, size =2) +
+  coord_sf(xlim=c(-125, -67), ylim=c(20,50))+
+  scale_color_manual(name = "MRI",
+                     values = c( "#440154FF",
+                                   "#3B528BFF",
+                                 "#21908CFF",
+                                "#5DC863FF",
+                                   "#FDE725FF"),
+                     labels = c("(1, 5]", "(5, 10]","(10, 15]","(15, 20]", "(20, 137]")) +
+  ggtitle("Day-3 CHANGE: Plot of 100-year event for FOS")
+```
+
+
+
+
+
+
+#Subset for the 500 year event
+```{r}
+geodata500_3 = combined_geo %>% 
+  filter(DAY_CHANGE == 3) %>% 
+  dplyr::select(ID, NAME, LONGITUDE, LATITUDE, EVENT500) %>% 
+  mutate(EVENT500 = as.integer(EVENT500)) 
+geodata500_3
+```
+
+
+
+```{r}
+#create sf object with geodata
+points_sf500_3 = st_as_sf(geodata500_3, coords = c("LONGITUDE", "LATITUDE" ), crs = 4326)
+```
+
+
+
+```{r}
+
+ggplot() +
+  geom_sf(data = usa_sf())+
+  geom_sf(data = points_sf500_3, aes( EVENT500, colour = cut(EVENT500, c(1, 5, 10, 15, 20, 347))), alpha =1, size =2) +
+  coord_sf(xlim=c(-125, -67), ylim=c(20,50))+
+  scale_color_manual(name = "MRI",
+                     values = c( "#440154FF",
+                                   "#3B528BFF",
+                                 "#21908CFF",
+                                "#5DC863FF",
+                                   "#FDE725FF"),
+                     labels = c("(1, 5]", "(5, 10]","(10, 15]","(15, 20]", "(20, 347]")) +
+  ggtitle("Day-3 CHANGE: Plot of 500-year event for FOS")
+```
+
+
+
+
+
+
+#Subset for the 50 year ratio event
+```{r}
+geodata_r3 = combined_geo %>% 
+  filter(DAY_CHANGE == 3) %>% 
+  dplyr::select(ID, NAME, LONGITUDE, LATITUDE, EVENT50_RATIO) %>%
+  filter( EVENT50_RATIO > 0)
+
+geodata_r3
+```
+
+
+```{r}
+#create sf object with geodata
+points_sf_r3 = st_as_sf(geodata_r3, coords = c("LONGITUDE", "LATITUDE" ), crs = 4326)
+```
+
+
+
+#Day-3 CHANGE: Plot of EVENT50_RATIO
+```{r}
+ggplot() +
+  geom_sf(data = usa_sf())+
+  geom_sf(data = points_sf_r3, aes( EVENT50_RATIO, colour = cut(EVENT50_RATIO, c(0, .2, .4, .6, 0.8, 1))), alpha =1, size =2) +
+  coord_sf(xlim=c(-125, -67), ylim=c(20,50))+
+  scale_color_manual(name = "RATIO",
+                     values = c("#440154FF",
+                                   "#3B528BFF",
+                                 "#21908CFF",
+                                "#5DC863FF",
+                                   "#FDE725FF"),
+                     labels = c("(0, 0.2]", "(0.2, 0.4]","(0.4, 0.6]","(0.6, 0.8]", "(0.8, 1]")) +
+  ggtitle("Day-3 CHANGE: Plot of EVENT50_RATIO for FOS")
+```
+
+
+
+

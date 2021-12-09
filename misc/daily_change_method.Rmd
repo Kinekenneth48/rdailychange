@@ -1,0 +1,262 @@
+---
+title: "Daily Change Method"
+author: "Kenneth Kin Pomeyie"
+date: "8/17/2021"
+output: pdf_document
+---
+
+#Load packages and functions
+```{r}
+library(tidyverse)
+
+library(lubridate)
+library(readxl)
+library(padr)
+library(raster)
+library(sp)
+library(MASS)
+library(fitdistrplus)
+library(extRemes)
+library(extraDistr)
+library(heatwaveR)
+library(data.table)
+
+
+#Function to remove NA from desired column
+Remove_na_cols <- function(data, desiredCols) {
+  completeVec <- complete.cases(data[, desiredCols])
+  return(data[completeVec, ])
+}
+
+#Function to sum three consecutive days
+sum_of_3 <- function(vector) {
+  if (vector[3] < 0 ) {
+    return(0)
+  } else {
+    return(sum(vector))
+  }
+}
+```
+
+#####  Load full dataset
+```{r}
+load("../data-raw/sample_data.rda")
+stations = read.csv("../data-raw//stations.csv")
+```
+
+
+#####  Convert full dataset to list based on unique ID
+```{r}
+#Convert dataframe of FOS data into list
+clean_dataset <- sample_data %>% 
+  mutate(ID = factor(ID, levels = unique(ID))) %>%
+  group_split(ID) %>%
+  setNames(unique(sample_data$ID))
+
+```
+
+
+
+
+
+
+
+
+
+##################################################################################################################################################
+############################################### DAY1 METHOD ######################################################################################
+###################################################################################################################################################
+
+```{r}
+#function to get station parameters based on D1 method
+source("station_parameterization_day1.R")
+
+
+DAY1 <- do.call(rbind,lapply(clean_dataset, FUN = station_parameterization_day1))
+DAY1 <- DAY1 %>% arrange(Station) %>% rename(NAME = Station)
+DAY1
+```
+
+
+
+
+
+##################################################################################################################################################
+############################################### DAY2 METHOD #########################################################################################
+###################################################################################################################################################
+
+
+```{r}
+#function to get station parameters based on D2 method
+source("station_parameterization_day2.R")
+
+
+data_day2 = lapply(clean_dataset, FUN = group_every_2days_main)
+data_day2 = data_day2[lengths(data_day2) != 0]
+
+DAY2 = lapply(data_day2, station_parameterization_day2)
+DAY2 = rbindlist(DAY2)
+
+
+DAY2 = left_join(x = DAY2, y = stations, by = "ID") %>%
+    dplyr::select(ID, NAME, NO_OF_OBSERVATIONS, DAY_CHANGE, EVENT50, EVENT100, EVENT500)
+DAY2
+
+```
+
+
+
+
+
+
+##################################################################################################################################################
+############################################### DAY3 METHOD #########################################################################################
+###################################################################################################################################################
+
+
+
+```{r}
+#function to get station parameters based on D3 method
+source("station_parameterization_day3.R")
+
+data_day3  = lapply(clean_dataset, FUN = group_every_3days_main1)
+data_day3 = data_day3[lengths(data_day3) != 0]
+data_day3 = lapply(data_day3, FUN = group_every_3days_main2)
+data_day3 = data_day3[lengths(data_day3) != 0]
+
+
+DAY3 =lapply(data_day3, station_parameterization_day3)
+DAY3 = rbindlist(DAY3)
+
+
+DAY3 = left_join(x = DAY3, y = stations, by = "ID") %>%
+  dplyr::select(ID, NAME,NO_OF_OBSERVATIONS, DAY_CHANGE, EVENT50,  EVENT100,  EVENT500)
+DAY3
+```
+
+##################################################################################################################################################
+###############################################  #########################################################################################
+###################################################################################################################################################
+
+#COMBINE D1,D2, and D3
+```{r}
+COMBINED_D123 = rbindlist(list(DAY1, DAY2, DAY3)) %>% 
+  arrange(NAME, DAY_CHANGE)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

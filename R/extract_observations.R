@@ -5,9 +5,9 @@
 #' Day-2 observations assume that the shedding phenomenon occurs after two days.
 #' Hence, Day-2 observations are a sum of two consecutive days of positive
 #' sequential changes. Day-3, Day-4 and Day-5 observations are a sum of three,
-#' four and five consecutive sequential daily changes respectively. In addition, 
-#' they allow for at most one middle sequential change to be a negative value as 
-#' long as the sum of the other sequential daily changes are greater than the 
+#' four and five consecutive sequential daily changes respectively. In addition,
+#' they allow for at most one middle sequential change to be a negative value as
+#' long as the sum of the other sequential daily changes are greater than the
 #' negative change.
 #' @param df data frame of SWE and other measurement location metadata.
 #' @param day Daily change method. This is an integer parameter. Default is
@@ -26,23 +26,25 @@ extract_observations <- function(df, day = 1,  col_name = "SWE") {
 
   if (day == 1) {
     seq_obs <- lapply(X = los, FUN = day1, col_name)
-    # class(seq_obs) <- "rdaily"
+
+
     return(seq_obs)
   } else if (day == 2) {
     seq_obs <- lapply(X = los, FUN = day2,  col_name)
-    # class(seq_obs) <- append(class(seq_obs),"rdaily")
+
+
     return(seq_obs)
   } else if (day == 3) {
      seq_obs = lapply(X = los, FUN = day3, col_name)
-   # class(seq_obs) <- append(class(seq_obs), "rdaily")
+
     return(seq_obs)
   } else if (day ==4) {
     seq_obs = lapply(X = los, FUN = day4, col_name)
-    # class(seq_obs) <- append(class(seq_obs), "rdaily")
+
     return(seq_obs)
   } else if (day == 5) {
     seq_obs = lapply(X = los, FUN = day5, col_name)
-    # class(seq_obs) <- append(class(seq_obs), "rdaily")
+
     return(seq_obs)
   } else {
     stop("Error: day must be between 0 and 6")
