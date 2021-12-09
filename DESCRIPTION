@@ -1,0 +1,43 @@
+Package: rdailychange
+Type: Package
+Title: Daily Change Method for Spatial Data
+Version: 0.0.0.9000
+Authors@R: 
+    c(person(given = "Kenneth Kin",
+           family = "Pomeyie",
+           role = c("aut", "cre"),
+           email = "kinekenneth48@gmail.com"),
+           person(given = "Braden",
+           family = "Mindrum",
+           role = "aut",
+           email = "braden.mindrum@usu.edu"),
+          person(given = "Kinspride",
+           family = "Duah",
+           role = "aut",
+           email = "kinspride2020@gmail.com"))
+Description: Spatial analysis of daily snow water equivalent (SWE). You provide 
+    the spatial data in a data frame with SWE and other specified columns, tell 
+    "rdailychange" which daily change to extract, which distribution(GEV or GP) 
+    to fit to the  extracted observations, and how to map the ground snow load 
+    mean recurrence intervals (MRIs) or return levels.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.2
+Suggests: 
+    knitr,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Depends: 
+    R (>= 2.10)
+Imports: 
+    data.table,
+    extremefit,
+    extRemes,
+    sf,
+    ggplot2,
+    Rcpp
+VignetteBuilder: knitr
+LinkingTo: 
+    Rcpp
