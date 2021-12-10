@@ -1,4 +1,10 @@
 ^README\.Rmd$
-^LICENSE\.md$
+^\.travis\.yml$
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^data-raw$
+^cran-comments\.md$
+^LICENSE\.md$
+^misc$
+^stations\.csv$
+^fos_data\.csv$

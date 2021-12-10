@@ -4,12 +4,14 @@
 \alias{plot.dailychange}
 \title{Map of MRIs or Annual MRIs Ratio}
 \usage{
-\method{plot}{dailychange}(df, size = 2.5, event = 50, annual = FALSE)
+\method{plot}{dailychange}(x, y, size = 2.5, event = 50, annual = FALSE, ...)
 }
 \arguments{
-\item{df}{A data frame of a fit summary object.
+\item{x}{A data frame of a fit summary object.
 The fit summary includes MRIs or Annual MRIs Ratio of the respective
 measurement locations.}
+
+\item{y}{Ignore for this implementation}
 
 \item{size}{Size of points on the map. This is an integer value that
 corresponds to the diameter of the points.}
@@ -21,6 +23,8 @@ show the 100-year or 500-year MRI/event values respectively.}
 
 \item{annual}{Annual MRI Ratios of the respective measurement locations
 are mapped. the default is FALSE.}
+
+\item{...}{Additional arguments passed to optim as necessary.}
 }
 \value{
 USA map of MRIs or Annual MRIs Ratio.

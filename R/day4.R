@@ -48,7 +48,7 @@ d4_method_from_vector <- function(x) {
 #' @return A list of numeric vectors containing the observations
 #'   for the D4 Method (list split across 2 or more raw observations of 0).
 #'
-#' @export
+
 d4_method <- function(df, col_name = "SWE") {
   x <- df[[col_name]]
   split_observations <- split_across_n_m(x)

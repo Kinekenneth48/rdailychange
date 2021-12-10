@@ -58,7 +58,7 @@ obtained by entering the following in the R console
 ```{r example}
 ?rdailychange::extract_observations
 ?rdailychange::fit_observations
-?rdailychange::plot_events
+?rdailychange::plot
 
 ```
 
@@ -118,12 +118,11 @@ d1_parm
 Finally, we can visualize the 50-year MRI values for each weather station.
 
 ```{r}
-rdailychange::plot_events(d1_parm)
+plot(d1_parm)
 ```
 
 
 
- `devtools::build_readme()` 
 
 ## Getting help
 
@@ -131,6 +130,7 @@ If you encounter a clear bug, please file an issue with a minimal reproducible
 example on [GitHub](https://github.com/Kinekenneth48/carsimr.pomeyie/issues).
 
 ---
-Please note that this package is released under the [MIT License](https://www.r-project.org/Licenses/MIT).
+Please note that this package is released under the
+[MIT License](https://www.r-project.org/Licenses/MIT).
 By participating or using this package you agree to abide by the terms of 
 the license.

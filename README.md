@@ -43,7 +43,9 @@ following in the R console
 ``` r
 ?rdailychange::extract_observations
 ?rdailychange::fit_observations
-?rdailychange::plot_events
+?rdailychange::plot
+#> No documentation for 'plot' in specified packages and libraries:
+#> you could try '??plot'
 ```
 
 The package also contains a sample dataset of snow load
@@ -223,12 +225,10 @@ Finally, we can visualize the 50-year MRI values for each weather
 station.
 
 ``` r
-rdailychange::plot_events(d1_parm)
+plot(d1_parm)
 ```
 
 <img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
-
-`devtools::build_readme()`
 
 ## Getting help
 

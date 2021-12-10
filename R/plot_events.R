@@ -1,9 +1,10 @@
 #' @title Map of MRIs or Annual MRIs Ratio
 #' @description This function plots the MRIs or Annual MRIs Ratio on a USA map.
 #'
-#' @param df  A data frame of a fit summary object.
+#' @param x A data frame of a fit summary object.
 #' The fit summary includes MRIs or Annual MRIs Ratio of the respective
 #' measurement locations.
+#' @param y Ignore for this implementation
 #' @param event  MRI/event values to map. The default is 50, which maps the
 #' 50-year.
 #' MRI/event values. If the user specifies the value 100 or 500, the map will
@@ -12,13 +13,15 @@
 #' are mapped. the default is FALSE.
 #' @param size Size of points on the map. This is an integer value that
 #' corresponds to the diameter of the points.
+#' @param ...  Additional arguments passed to optim as necessary.
 #' @return USA map of MRIs or Annual MRIs Ratio.
 #' @export
+#'
 
 
-plot.dailychange  <- function(df, size = 2.5, event = 50, annual = FALSE) {
+plot.dailychange  <- function(x,y , size = 2.5, event = 50, annual = FALSE,...) {
   if (annual == FALSE & event == 50) {
-    point_sf <- sf::st_as_sf(df,
+    point_sf <- sf::st_as_sf(x,
       coords = c("LONGITUDE", "LATITUDE"),
       crs = 4326
     )
@@ -49,7 +52,7 @@ plot.dailychange  <- function(df, size = 2.5, event = 50, annual = FALSE) {
       ) +
       ggplot2::labs(x = "")
   } else if (annual == TRUE & event == 50) {
-    point_sf <- sf::st_as_sf(df,
+    point_sf <- sf::st_as_sf(x,
       coords = c("LONGITUDE", "LATITUDE"),
       crs = 4326
     )
@@ -77,7 +80,7 @@ plot.dailychange  <- function(df, size = 2.5, event = 50, annual = FALSE) {
       ) +
       ggplot2::labs(x = "")
   } else if (annual == FALSE & event == 100) {
-    point_sf <- sf::st_as_sf(df,
+    point_sf <- sf::st_as_sf(x,
       coords = c("LONGITUDE", "LATITUDE"),
       crs = 4326
     )
@@ -108,7 +111,7 @@ plot.dailychange  <- function(df, size = 2.5, event = 50, annual = FALSE) {
       ) +
       ggplot2::labs(x = "")
   } else if (annual == TRUE & event == 100) {
-    point_sf <- sf::st_as_sf(df,
+    point_sf <- sf::st_as_sf(x,
       coords = c("LONGITUDE", "LATITUDE"),
       crs = 4326
     )
@@ -136,7 +139,7 @@ plot.dailychange  <- function(df, size = 2.5, event = 50, annual = FALSE) {
       ) +
       ggplot2::labs(x = "")
   } else if (annual == FALSE & event == 500) {
-    point_sf <- sf::st_as_sf(df,
+    point_sf <- sf::st_as_sf(x,
       coords = c("LONGITUDE", "LATITUDE"),
       crs = 4326
     )
@@ -167,7 +170,7 @@ plot.dailychange  <- function(df, size = 2.5, event = 50, annual = FALSE) {
       ) +
       ggplot2::labs(x = "")
   } else if (annual == TRUE & event == 500) {
-    point_sf <- sf::st_as_sf(df,
+    point_sf <- sf::st_as_sf(x,
       coords = c("LONGITUDE", "LATITUDE"),
       crs = 4326
     )

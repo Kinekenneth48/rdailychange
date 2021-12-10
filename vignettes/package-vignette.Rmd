@@ -47,6 +47,8 @@ makes use of the ggplot2, sf, and dplyr package.
 library(ggplot2)
 library(usmap)
 library(dplyr)
+library(maptools)
+
 
 df = distinct(sample_data, ID, .keep_all = TRUE) %>%
   select(LONGITUDE, LATITUDE)
@@ -135,12 +137,12 @@ maximum loads. Note that the <TT>plot_events()</TT> function demonstrated below 
 applied to multiple-day objects.
 
 ```{r fig.height = 6, fig.width = 6, fig.align = "center"}
-plot_events(d1_parm_gev, event = 50, annual = FALSE)
+plot(d1_parm_gev, event = 50, annual = FALSE)
 
 ```
 
 ```{r fig.height = 6, fig.width = 6, fig.align = "center"}
-plot_events(d1_parm_gev, event = 50, annual = TRUE)
+plot(d1_parm_gev, event = 50, annual = TRUE)
 
 ```
 
