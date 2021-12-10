@@ -2,7 +2,7 @@
 #' @title Helper Function to Fit Extracted Observations
 #' @description This function allows the user to fit a Generalized Extreme Value
 #' (GEV) or a Generalized Pareto (GP) distribution to the
-#'  extracted observations. the function does not fit Measurement locations 
+#'  extracted observations. the function does not fit Measurement locations
 #' with less than 30.
 #' @param list A list object of extracted observations.
 #' @param type The type of distribution (GEV or GP) to fit to the observations.
@@ -12,11 +12,11 @@
 
 fit_gp_gev <- function(list, type = "GEV") {
 
-  #if GP is specified, fit a GP distribution to the observations
+  # if GP is specified, fit a GP distribution to the observations
   if (type == "GP") {
     if (list[[2]][, .N] < 30) {
 
-      #return an empty data table when number of observations is less than 30
+      # return an empty data table when number of observations is less than 30
       df <- data.table(
         ID = character(),
         NAME = character(),
@@ -35,13 +35,13 @@ fit_gp_gev <- function(list, type = "GEV") {
 
       return(df)
     } else {
-      #fit GP distribution to annual and daily change observations
+      # fit GP distribution to annual and daily change observations
       fit_gp1 <- extremefit::hill.adapt(list[[1]]$DIFF)
       fit_gp2 <- extremefit::hill.adapt(list[[2]]$ANNUAL)
 
 
       # estimate the 50-year,100-year,and 500-year MRI for annual and
-      #daily change observations
+      # daily change observations
       y1 <- extremefit::predict.hill.adapt(fit_gp1,
         newdata = c(0.98, 0.99, 0.998),
         type = "quantile"
@@ -51,14 +51,14 @@ fit_gp_gev <- function(list, type = "GEV") {
         type = "quantile"
       )$y
 
-     #get station metadata
+      # get station metadata
       ID <- unique(list[[1]]$ID)
       NAME <- unique(list[[1]]$NAME)
       STATE <- unique(list[[1]]$STATE)
       LONGITUDE <- unique(list[[1]]$LONGITUDE)
       LATITUDE <- unique(list[[1]]$LATITUDE)
 
-      #create fit summary
+      # create fit summary
       df <- data.table(
         ID = ID,
         NAME = NAME,
@@ -79,10 +79,10 @@ fit_gp_gev <- function(list, type = "GEV") {
     }
   } else if (type == "GEV") {
 
-    #if GEV is specified, fit a GEV distribution to the observations
+    # if GEV is specified, fit a GEV distribution to the observations
     if (list[[2]][, .N] < 30) {
 
-      #return an empty data table when number of observations is less than 30
+      # return an empty data table when number of observations is less than 30
       df <- data.table(
         ID = character(),
         NAME = character(),
@@ -101,7 +101,7 @@ fit_gp_gev <- function(list, type = "GEV") {
 
       return(df)
     } else {
-      #fit GEV distribution to annual and daily change observations
+      # fit GEV distribution to annual and daily change observations
       fit_gev1 <- extRemes::fevd(
         x = list[[1]]$DIFF, type = "GEV",
         method = "Lmoments", time.units = "days"
@@ -113,12 +113,12 @@ fit_gp_gev <- function(list, type = "GEV") {
       )
 
       # estimate the 50-year,100-year,and 500-year MRI for annual and
-      #daily change observations
+      # daily change observations
       y1 <- extRemes::return.level(fit_gev1, return.period = c(50, 100, 500))
 
       y2 <- extRemes::return.level(fit_gev2, return.period = c(50, 100, 500))
 
-      #get station metadata
+      # get station metadata
       ID <- unique(list[[1]]$ID)
       NAME <- unique(list[[1]]$NAME)
       STATE <- unique(list[[1]]$STATE)
@@ -126,7 +126,7 @@ fit_gp_gev <- function(list, type = "GEV") {
       LATITUDE <- unique(list[[1]]$LATITUDE)
 
 
-      #create fit summary
+      # create fit summary
       df <- data.table(
         ID = ID,
         NAME = NAME,

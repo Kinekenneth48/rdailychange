@@ -16,7 +16,9 @@
 fit_observations <- function(list, type = "GEV") {
   fit_summary <- rbindlist(lapply(X = list, FUN = fit_gp_gev, type))
 
-  fit_summary = structure(fit_summary, class=c("dailychange", "data.table",
-                                               "data.frame"))
+  fit_summary <- structure(fit_summary, class = c(
+    "dailychange", "data.table",
+    "data.frame"
+  ))
   return(fit_summary)
 }

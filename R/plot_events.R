@@ -16,10 +16,11 @@
 #' @param ...  Additional arguments passed to optim as necessary.
 #' @return USA map of MRIs or Annual MRIs Ratio.
 #' @export
-#'
 
 
-plot.dailychange  <- function(x,y , size = 2.5, event = 50, annual = FALSE,...) {
+
+plot.dailychange <- function(x, y, size = 2.5, event = 50,
+                             annual = FALSE, ...) {
   if (annual == FALSE & event == 50) {
     point_sf <- sf::st_as_sf(x,
       coords = c("LONGITUDE", "LATITUDE"),

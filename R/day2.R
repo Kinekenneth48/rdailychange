@@ -13,7 +13,7 @@ d2_method_from_vector <- function(x) {
     return(NULL)
   }
 
-  x = append(0,x) #made change
+  x <- append(0, x) # made change
   dx <- x[-1] - x[-length(x)]
   d2_cands <- dx[1:(length(dx) - (n - 1))] > 0 & dx[n:length(dx)] > 0
   d2_cands <- purge_d2_cands(d2_cands)
@@ -38,8 +38,8 @@ d2_method <- function(df, col_name = "SWE") {
   x <- df[[col_name]]
   split_observations <- split_across_n_m(x)
   result <- lapply(split_observations, d2_method_from_vector)
-  result = unlist(result) #made change
-  result = result[!(is.na(result))]
+  result <- unlist(result) # made change
+  result <- result[!(is.na(result))]
   return(result)
 }
 
@@ -51,7 +51,8 @@ d2_method <- function(df, col_name = "SWE") {
 
 
 #' @title Extract Day-2 method observations
-#' @description This function allows the user to extract sequential daily changes
+#' @description This function allows the user to extract sequential daily
+#'  changes
 #' (Day-1 method) in SWE.
 #' @param station_data A data table of a measurement location/station.
 #' @param col_name Character string of the column name containing the
@@ -71,18 +72,18 @@ day2 <- function(station_data, col_name) {
   annual <- data.table::copy(station_data)
 
 
-  #get station meta data
-  ID = unique(station_data$ID)
-  NAME = unique(station_data$NAME)
-  STATE = unique(station_data$STATE)
-  LONGITUDE = unique(station_data$LONGITUDE)
-  LATITUDE = unique(station_data$LATITUDE)
+  # get station meta data
+  ID <- unique(station_data$ID)
+  NAME <- unique(station_data$NAME)
+  STATE <- unique(station_data$STATE)
+  LONGITUDE <- unique(station_data$LONGITUDE)
+  LATITUDE <- unique(station_data$LATITUDE)
 
 
-  DIFF = d2_method(station_data, col_name)
+  DIFF <- d2_method(station_data, col_name)
 
 
-  d2 = data.table(ID,NAME,STATE,LONGITUDE,LATITUDE ,DIFF )
+  d2 <- data.table(ID, NAME, STATE, LONGITUDE, LATITUDE, DIFF)
 
   # modification by reference
   annual[, MONTH := as.numeric(format(as.Date(DATE), "%m"))]

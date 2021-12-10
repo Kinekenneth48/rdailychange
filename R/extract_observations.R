@@ -18,9 +18,9 @@
 #' daily sequential observations.
 #' @export
 #' @import  data.table
-extract_observations <- function(df, day = 1,  col_name = "SWE") {
+extract_observations <- function(df, day = 1, col_name = "SWE") {
 
-  #convert data frame to data table and split into list by ID
+  # convert data frame to data table and split into list by ID
   df <- data.table::setDT(df)
   los <- split(df, by = "ID")
 
@@ -30,20 +30,20 @@ extract_observations <- function(df, day = 1,  col_name = "SWE") {
 
     return(seq_obs)
   } else if (day == 2) {
-    seq_obs <- lapply(X = los, FUN = day2,  col_name)
+    seq_obs <- lapply(X = los, FUN = day2, col_name)
 
 
     return(seq_obs)
   } else if (day == 3) {
-     seq_obs = lapply(X = los, FUN = day3, col_name)
+    seq_obs <- lapply(X = los, FUN = day3, col_name)
 
     return(seq_obs)
-  } else if (day ==4) {
-    seq_obs = lapply(X = los, FUN = day4, col_name)
+  } else if (day == 4) {
+    seq_obs <- lapply(X = los, FUN = day4, col_name)
 
     return(seq_obs)
   } else if (day == 5) {
-    seq_obs = lapply(X = los, FUN = day5, col_name)
+    seq_obs <- lapply(X = los, FUN = day5, col_name)
 
     return(seq_obs)
   } else {

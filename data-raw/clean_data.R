@@ -94,17 +94,19 @@ wesd_conversion <- function(station_data) {
 
 
 
-# impute the missing SWE values with SNWD using the Hill's method
-  DT[ , SWE_HILL := hill_conversion(h = snwd, lon = LONGITUDE,
-                                    lat = LATITUDE, date = DATE)]
+  # impute the missing SWE values with SNWD using the Hill's method
+  DT[, SWE_HILL := hill_conversion(
+    h = snwd, lon = LONGITUDE,
+    lat = LATITUDE, date = DATE
+  )]
 
 
-  DT[,SWE := ifelse(is.na(SWE) & SNWD > 0 , SWE_HILL, SWE) ]
+  DT[, SWE := ifelse(is.na(SWE) & SNWD > 0, SWE_HILL, SWE)]
 
 
 
   # replace na with zero
-  DT[,SWE := ifelse(is.na(SWE) , 0, SWE) ]
+  DT[, SWE := ifelse(is.na(SWE), 0, SWE)]
 
 
 
@@ -118,7 +120,7 @@ wesd_conversion <- function(station_data) {
 # ============================================================================#
 
 
-clean_dataset = lapply(ls_fos, FUN = wesd_conversion)
+clean_dataset <- lapply(ls_fos, FUN = wesd_conversion)
 
 
 

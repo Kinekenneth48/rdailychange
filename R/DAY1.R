@@ -27,16 +27,15 @@ split_across_n_m <- function(x, n = 2, m = 0) {
 # perform the D1 Method (if not, it will return NULL), and then calculate
 # the D1 Method.
 d1_method_from_vector <- function(x) {
-  n <- 1
-  if (length(x) <  1) {
+  if (length(x) < 1) {
     return(NULL)
   }
 
-  x = append(0,x) #made change
+  x <- append(0, x) # made change
   dx <- x[-1] - x[-length(x)]
   result <- dx[dx > 0]
-  result = unlist(result) #made change
-  result = result[!(is.na(result))]
+  result <- unlist(result) # made change
+  result <- result[!(is.na(result))]
   return(result)
 }
 
@@ -56,7 +55,7 @@ d1_method <- function(df, col_name = "SWE") {
   x <- df[[col_name]]
   split_observations <- split_across_n_m(x)
   result <- lapply(split_observations, d1_method_from_vector)
-  result = unlist(result) #made change
+  result <- unlist(result) # made change
   return(result)
 }
 
@@ -66,7 +65,8 @@ d1_method <- function(df, col_name = "SWE") {
 
 
 #' @title Extract Day-1 method observations
-#' @description This function allows the user to extract sequential daily changes
+#' @description This function allows the user to extract sequential daily
+#'  changes
 #' (Day-1 method) in SWE.
 #' @param station_data A data table of a measurement location/station.
 #' @param col_name Character string of the column name containing the
@@ -86,18 +86,18 @@ day1 <- function(station_data, col_name) {
   annual <- data.table::copy(station_data)
 
 
-#get station meta data
-  ID = unique(station_data$ID)
-  NAME = unique(station_data$NAME)
-  STATE = unique(station_data$STATE)
-  LONGITUDE = unique(station_data$LONGITUDE)
-  LATITUDE = unique(station_data$LATITUDE)
+  # get station meta data
+  ID <- unique(station_data$ID)
+  NAME <- unique(station_data$NAME)
+  STATE <- unique(station_data$STATE)
+  LONGITUDE <- unique(station_data$LONGITUDE)
+  LATITUDE <- unique(station_data$LATITUDE)
 
 
-  DIFF = d1_method(station_data, col_name)
+  DIFF <- d1_method(station_data, col_name)
 
 
-  d1 = data.table(ID,NAME,STATE,LONGITUDE,LATITUDE ,DIFF )
+  d1 <- data.table(ID, NAME, STATE, LONGITUDE, LATITUDE, DIFF)
 
   # modification by reference
   annual[, MONTH := as.numeric(format(as.Date(DATE), "%m"))]
