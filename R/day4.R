@@ -1,27 +1,18 @@
-
-
-# HELPER FUNCTION 2 #####
-# Because of HELPER FUNCTION 1, the HELPER FUNCTION 2 assumes to work with
-# dx which is derived from raw observations with no consecutive 0's.
-
-# For the D4 Method, we need to have four consecutive changes, the ends of
-# which are positive, and at most one of the two middles is negative. This
-# function takes the changes and returns a logical vector of TRUEs when
-# at most one of the two middles is negative.
+#' @title middle_negative_test
+#' @desctiption For the D4 Method, we need to have four consecutive changes, 
+#' the ends of which are positive, and at most one of the two middles is 
+#' negative. This function takes the changes and returns a logical vector of
+#' TRUEs when at most one of the two middles is negative.
 middle_negative_test <- function(dx) { # n = 2 only
   negs <- (dx[2:(length(dx) - 2)] < 0) + # First middle < 0 PLUS
     (dx[3:(length(dx) - 1)] < 0) # Second middle < 0
   return(negs <= 1) # Only first middle or second middle can be < 0.
 }
 
-
-# HELPER FUNCTION 4 #####
-# Because of HELPER FUNCTION 1, the HELPER FUNCTION 4 assumes to work with
-# raw observations with no consecutive 0's.
-
-# This function will take raw observations, make sure there is enough data to
-# perform the D4 Method (if not, it will return NULL), and then calculate
-# the D4 Method.
+#' @title d4_method_from_vector
+#' @description This function will take raw observations, make sure there is 
+#' enough data to perform the D4 Method (if not, it will return NULL), and 
+#' then calculate the D4 Method.
 d4_method_from_vector <- function(x) {
   n <- 4
   if (length(x) < n) {
@@ -36,19 +27,18 @@ d4_method_from_vector <- function(x) {
   return(result)
 }
 
-#' Calculate D4 Method for Snow Loads
-#'
+#' @titleCalculate D4 Method for Snow Loads
 #' @description Given a dataframe, a column of which includes snow observations,
 #'   this function will calculate the D4 Method.
-#'
 #' @param df The dataframe containing snow observations.
 #' @param col_name Character string of the column name containing the
 #'   snow observations.
-#'
 #' @return A list of numeric vectors containing the observations
-#'   for the D4 Method (list split across 2 or more raw observations of 0).
+#' for the D4 Method (list split across 2 or more raw observations of 0).
+#' @example
+#' d4_method(sample.data)
 #'
-
+#' @export
 d4_method <- function(df, col_name = "SWE") {
   x <- df[[col_name]]
   split_observations <- split_across_n_m(x)
@@ -58,25 +48,15 @@ d4_method <- function(df, col_name = "SWE") {
   return(result)
 }
 
-
-
-
-
-
-
 #' @title Extract Day-4 method observations
 #' @description This function allows the user to extract sequential daily
-#' changes
-#' (Day-1 method) in SWE.
+#' changes (Day-1 method) in SWE.
 #' @param station_data A data table of a measurement location/station.
-#'
 #' @param col_name Character string of the column name containing the
 #'   snow observations.
-#'
 #' @return A list with two elements. The first element is the Day-4
 #' method observations, while the second element is the annual maximum load
 #' for each snow year.
-
 day4 <- function(station_data, col_name) {
 
   # set data frame as data.table
