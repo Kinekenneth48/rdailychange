@@ -36,8 +36,8 @@ The daily snow water equivalent of measurement stations used in this analysis wa
 
 ```{r}
 library(rdailychange)
-data("sample_data")
-head(sample_data)
+data("clean_dataset")
+head(clean_dataset)
 ```
 
 The following figure shows a map of 50 stations locations.The code for this map 
@@ -50,7 +50,7 @@ library(dplyr)
 library(maptools)
 
 
-df = distinct(sample_data, ID, .keep_all = TRUE) %>%
+df = distinct(clean_dataset, ID, .keep_all = TRUE) %>%
   select(LONGITUDE, LATITUDE)
 
  
@@ -78,17 +78,17 @@ a single to  multiple day the number of extracted observations reduce.
 
 ```{r}
 # extract single-day observations
-d1 = rdailychange::extract_observations(sample_data, day=1)
+d1 = rdailychange::extract_observations(clean_dataset, day=1)
 d1[[1]][[1]]
 
 
 # extract Day-2 observations
-d2 = rdailychange::extract_observations(sample_data, day=2)
+d2 = rdailychange::extract_observations(clean_dataset, day=2)
 d2[[1]][[1]]
 
 
 # extract Day-3 observations
-d3 = rdailychange::extract_observations(sample_data, day=3)
+d3 = rdailychange::extract_observations(clean_dataset, day=3)
 d3[[1]][[1]]
 ```
 
