@@ -15,10 +15,10 @@
 #' corresponds to the diameter of the points.
 #' @param ...  Additional arguments passed to optim as necessary.
 #' @return USA map of MRIs or Annual MRIs Ratio.
+#' @example
+#' plot_events(sample.event)
+#'
 #' @export
-
-
-
 plot.dailychange <- function(x, y, size = 2.5, event = 50,
                              annual = FALSE, ...) {
   if (annual == FALSE & event == 50) {
