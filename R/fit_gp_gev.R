@@ -1,4 +1,3 @@
-
 #' @title Helper Function to Fit Extracted Observations
 #' @description This function allows the user to fit a Generalized Extreme Value
 #' (GEV) or a Generalized Pareto (GP) distribution to the
