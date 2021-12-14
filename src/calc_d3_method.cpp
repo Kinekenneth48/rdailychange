@@ -31,7 +31,6 @@ using namespace Rcpp;
 //'               FALSE, TRUE, FALSE, FALSE, FALSE)
 //' calc_d3_method(d3_cands, dx)
 //'
-//' @export
 // [[Rcpp::export]]
 NumericVector calc_d3_method(LogicalVector d3_cands,
                              NumericVector dx) {

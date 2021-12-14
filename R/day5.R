@@ -1,7 +1,8 @@
 #' @title middle_negative_test
-#' @description For the D4 Method, we need to have five consecutive changes, 
-#' the ends of which are positive, and at most one of the three middles is 
-#' negative. This function takes the changes and returns a logical vector of 
+#' @param dx A sequential change of SWE values. This is a vector object.
+#' @description For the D4 Method, we need to have five consecutive changes,
+#' the ends of which are positive, and at most one of the three middles is
+#' negative. This function takes the changes and returns a logical vector of
 #' TRUEs when at most one of the three middles is negative.
 middle_negative_test <- function(dx) {
   negs <- (dx[2:(length(dx) - 3)] < 0) + # First middle < 0 PLUS
@@ -11,7 +12,8 @@ middle_negative_test <- function(dx) {
 }
 
 #' @title d5_method_from_vector
-#' @description This function will take raw observations, make sure there is 
+#' @param x A sequential change of SWE values. This is a vector object.
+#' @description This function will take raw observations, make sure there is
 #' enough data to perform the D5 Method (if not, it will return NULL), and then
 #' calculate the D5 Method.
 d5_method_from_vector <- function(x) {
@@ -31,7 +33,7 @@ d5_method_from_vector <- function(x) {
 }
 
 #' @ title Calculate D5 Method for Snow Loads
-#' @description Given a dataframe, a column of which includes snow 
+#' @description Given a dataframe, a column of which includes snow
 #' observations, this function will calculate the D4 Method.
 #' @param df The dataframe containing snow observations.
 #' @param col_name Character string of the column name containing the

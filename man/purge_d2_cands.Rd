@@ -37,5 +37,4 @@ logical vector.
 d2_cands <- c(TRUE, FALSE, TRUE, TRUE, TRUE, TRUE,
               TRUE, FALSE, TRUE, TRUE, FALSE)
 purge_d2_cands(d2_cands)
-
 }

@@ -1,6 +1,7 @@
-#' @title d2_method_from_vector 
-#' @description This function take raw observations, make sure there is 
-#' enough data to perform the D2 Method (if not, it will return NULL), 
+#' @title d2_method_from_vector
+#' @param x A sequential change of SWE values. This is a vector object.
+#' @description This function take raw observations, make sure there is
+#' enough data to perform the D2 Method (if not, it will return NULL),
 #' and then calculate the D2 Method.
 d2_method_from_vector <- function(x) {
   n <- 2

@@ -8,8 +8,6 @@
 #' The default is GEV.
 #' @return A fit summary with measurement location metadata , MRIs and Annual
 #' MRI ratios.
-#' @example
-#' fit_observations(sample.list)
 #'
 #' @export fit_observations
 #' @export

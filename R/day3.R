@@ -1,6 +1,7 @@
 #' @title d3_method_from_vector
-#' @description This function takes raw observations, make sure there is 
-#' enough data to perform the D3 Method (if not, it will return NULL), 
+#' @param x A sequential change of SWE values. This is a vector object.
+#' @description This function takes raw observations, make sure there is
+#' enough data to perform the D3 Method (if not, it will return NULL),
 #' and then calculate the D3 Method.
 d3_method_from_vector <- function(x) {
   n <- 3

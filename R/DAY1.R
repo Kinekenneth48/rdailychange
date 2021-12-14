@@ -1,16 +1,15 @@
-#' @title split_across_n_m 
+#' @title split_across_n_m
+#' @param x A sequential change of SWE values. This is a vector object.
+#' @param n This represents the zeros to split a vector. The default is 2, if
+#' there are two consecutive zeros, the vector will be split at that point.
+#' @param m This represents the value when encountered will serve as a
+#' a splitting point.
 #' @description This function takes a vector x of raw snow observations and
 #' split the vector across n or more m's into a list of vectors.
 #'
-#' @example
-#' x <- c(1, 2, 0, 0, 0, 4, 5, 0, 3, 0, 0, 2, 1, 3)
+#' @examples x <- c(1, 2, 0, 0, 0, 4, 5, 0, 3, 0, 0, 2, 1, 3)
 #' split_across_n_m(x)
-#' $`0`
-#' [1] 1 2
-#' $`1`
-#' [1] 4 5 0 3
-#' $`2`
-#' [1] 2 1 3
+
 split_across_n_m <- function(x, n = 2, m = 0) {
   r <- rle(x == m)
   r$values <- cumsum(r$values & r$lengths > n - 1)
@@ -19,11 +18,12 @@ split_across_n_m <- function(x, n = 2, m = 0) {
 }
 
 #' @title d1_method_from_vector
-#' @description Helper Function 2 works in the same manner as Helper Function 1                  
+#' @param x A sequential change of SWE values. This is a vector object.
+#' @description Helper Function 2 works in the same manner as Helper Function 1
 #' but this time time the vector x has no consecutive 0's. This function takes
-#' raw observations, make sure there is enough data to perform the D1 Method 
+#' raw observations, make sure there is enough data to perform the D1 Method
 #' (if not, it will return NULL), and then calculate the D1 Method.
-                   
+
 d1_method_from_vector <- function(x) {
   if (length(x) < 1) {
     return(NULL)

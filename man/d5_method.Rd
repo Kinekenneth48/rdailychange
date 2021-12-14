@@ -2,7 +2,7 @@
 % Please edit documentation in R/day5.R
 \name{d5_method}
 \alias{d5_method}
-\title{Calculate D5 Method for Snow Loads}
+\title{title Calculate D5 Method for Snow Loads}
 \usage{
 d5_method(df, col_name = "SWE")
 }
@@ -17,6 +17,6 @@ A list of numeric vectors containing the observations
 for the D5 Method (list split across 2 or more raw observations of 0).
 }
 \description{
-Given a dataframe, a column of which includes snow observations,
-this function will calculate the D4 Method.
+Given a dataframe, a column of which includes snow
+observations, this function will calculate the D4 Method.
 }

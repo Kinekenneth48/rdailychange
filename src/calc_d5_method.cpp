@@ -35,7 +35,6 @@ using namespace Rcpp;
 //'               FALSE, FALSE, FALSE)
 //' calc_d5_method(d5_cands, dx)
 //'
-//' @export
 // [[Rcpp::export]]
 NumericVector calc_d5_method(LogicalVector d5_cands,
                              NumericVector dx) {

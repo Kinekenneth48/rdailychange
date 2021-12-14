@@ -34,7 +34,6 @@ using namespace Rcpp;
 //'               TRUE, FALSE, FALSE, TRUE)
 //' calc_d4_method(d4_cands, dx)
 //'
-//' @export
 // [[Rcpp::export]]
 NumericVector calc_d4_method(LogicalVector d4_cands,
                              NumericVector dx) {

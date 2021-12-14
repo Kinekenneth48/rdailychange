@@ -19,6 +19,5 @@ for each snow year.
 }
 \description{
 This function allows the user to extract sequential daily
-changes
-(Day-1 method) in SWE.
+changes (Day-1 method) in SWE.
 }

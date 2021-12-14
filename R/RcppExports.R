@@ -31,7 +31,6 @@
 #'               FALSE, TRUE, FALSE, FALSE, FALSE)
 #' calc_d3_method(d3_cands, dx)
 #'
-#' @export
 calc_d3_method <- function(d3_cands, dx) {
     .Call(`_rdailychange_calc_d3_method`, d3_cands, dx)
 }
@@ -69,7 +68,6 @@ calc_d3_method <- function(d3_cands, dx) {
 #'               TRUE, FALSE, FALSE, TRUE)
 #' calc_d4_method(d4_cands, dx)
 #'
-#' @export
 calc_d4_method <- function(d4_cands, dx) {
     .Call(`_rdailychange_calc_d4_method`, d4_cands, dx)
 }
@@ -108,7 +106,6 @@ calc_d4_method <- function(d4_cands, dx) {
 #'               FALSE, FALSE, FALSE)
 #' calc_d5_method(d5_cands, dx)
 #'
-#' @export
 calc_d5_method <- function(d5_cands, dx) {
     .Call(`_rdailychange_calc_d5_method`, d5_cands, dx)
 }
@@ -141,8 +138,6 @@ calc_d5_method <- function(d5_cands, dx) {
 #' d2_cands <- c(TRUE, FALSE, TRUE, TRUE, TRUE, TRUE,
 #'               TRUE, FALSE, TRUE, TRUE, FALSE)
 #' purge_d2_cands(d2_cands)
-#'
-#' @export
 purge_d2_cands <- function(d2_cands) {
     .Call(`_rdailychange_purge_d2_cands`, d2_cands)
 }

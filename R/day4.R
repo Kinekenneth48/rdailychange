@@ -1,6 +1,7 @@
 #' @title middle_negative_test
-#' @desctiption For the D4 Method, we need to have four consecutive changes, 
-#' the ends of which are positive, and at most one of the two middles is 
+#' @param dx  A sequential change of SWE values. This is a vector object.
+#' @description For the D4 Method, we need to have four consecutive changes,
+#' the ends of which are positive, and at most one of the two middles is
 #' negative. This function takes the changes and returns a logical vector of
 #' TRUEs when at most one of the two middles is negative.
 middle_negative_test <- function(dx) { # n = 2 only
@@ -10,8 +11,9 @@ middle_negative_test <- function(dx) { # n = 2 only
 }
 
 #' @title d4_method_from_vector
-#' @description This function will take raw observations, make sure there is 
-#' enough data to perform the D4 Method (if not, it will return NULL), and 
+#' @param x A vector of SWE values
+#' @description This function will take raw observations, make sure there is
+#' enough data to perform the D4 Method (if not, it will return NULL), and
 #' then calculate the D4 Method.
 d4_method_from_vector <- function(x) {
   n <- 4
@@ -27,7 +29,7 @@ d4_method_from_vector <- function(x) {
   return(result)
 }
 
-#' @titleCalculate D4 Method for Snow Loads
+#' @title D4 Method for Snow Loads
 #' @description Given a dataframe, a column of which includes snow observations,
 #'   this function will calculate the D4 Method.
 #' @param df The dataframe containing snow observations.
@@ -35,8 +37,6 @@ d4_method_from_vector <- function(x) {
 #'   snow observations.
 #' @return A list of numeric vectors containing the observations
 #' for the D4 Method (list split across 2 or more raw observations of 0).
-#' @example
-#' d4_method(sample.data)
 #'
 #' @export
 d4_method <- function(df, col_name = "SWE") {

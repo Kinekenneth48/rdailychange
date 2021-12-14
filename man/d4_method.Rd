@@ -2,7 +2,7 @@
 % Please edit documentation in R/day4.R
 \name{d4_method}
 \alias{d4_method}
-\title{Calculate D4 Method for Snow Loads}
+\title{D4 Method for Snow Loads}
 \usage{
 d4_method(df, col_name = "SWE")
 }
