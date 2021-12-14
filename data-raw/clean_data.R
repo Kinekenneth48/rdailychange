@@ -73,7 +73,6 @@ wesd_conversion <- function(station_data) {
 
 
   # combine SWE AND SNWD into the newly created data table
-
   DT <- merge.data.table(DT, stations, by = "ID", all.x = TRUE)
   DT <- DT[, .(ID, NAME, LONGITUDE, LATITUDE, DATE)]
 
@@ -89,12 +88,13 @@ wesd_conversion <- function(station_data) {
   DT[, SWE := ifelse(SNWD > 0 & SWE == 0, NA, SWE)]
 
 
-  # remove outlier not detected by 2020 National Snow study
-  DT[, SWE := ifelse(SWE == 2291.10000 & ID == "USW00014735", NA, SWE)]
 
 
-
-  # impute the missing SWE values with SNWD using the Hill's method
+  # impute the missing SWE values with SNWD using the Hill's method. The hill
+  # function used in the code below is based on spatial file extension that
+  # can not be included in this package. To run the code line 101 to 104, please
+  # reach out to the author's of the package for the hill_conversion function
+  # and its associated file extension.
   DT[, SWE_HILL := hill_conversion(
     h = snwd, lon = LONGITUDE,
     lat = LATITUDE, date = DATE
