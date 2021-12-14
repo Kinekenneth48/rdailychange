@@ -33,7 +33,7 @@ plot.dailychange <- function(x, y, size = 2.5, event = 50,
       ggplot2::geom_sf(data = point_sf, mapping = ggplot2::aes(
         colour = cut(
           x = EVENT50,
-          breaks = c(1, 5, 8, 10, 20, 60)
+          breaks = c(1, 5, 10, 15, 20, 90)
         )
       ), alpha = 1, size = size) +
       ggplot2::coord_sf(xlim = c(-125, -67), ylim = c(20, 50)) +
@@ -47,8 +47,8 @@ plot.dailychange <- function(x, y, size = 2.5, event = 50,
           "#FDE725FF"
         ),
         labels = c(
-          "(1, 5]", "(5, 8]", "(8, 10]", "(10, 20]",
-          "(20, 55]"
+          "(1, 5]", "(5, 10]", "(10, 15]", "(15, 20]",
+          "(20, 90]"
         )
       ) +
       ggplot2::labs(x = "")
@@ -92,7 +92,7 @@ plot.dailychange <- function(x, y, size = 2.5, event = 50,
       ggplot2::geom_sf(data = point_sf, mapping = ggplot2::aes(
         colour = cut(
           X = EVENT100,
-          breaks = c(1, 5, 8, 10, 20, 60)
+          breaks = c(1, 5, 10, 15, 20, 90)
         )
       ), alpha = 1, size = size) +
       ggplot2::coord_sf(xlim = c(-125, -67), ylim = c(20, 50)) +
@@ -106,8 +106,8 @@ plot.dailychange <- function(x, y, size = 2.5, event = 50,
           "#FDE725FF"
         ),
         labels = c(
-          "(1, 5]", "(5, 8]", "(8, 10]", "(10, 20]",
-          "(20, 55]"
+          "(1, 5]", "(5, 10]", "(10, 15]", "(15, 20]",
+          "(20, 90]"
         )
       ) +
       ggplot2::labs(x = "")
@@ -151,7 +151,7 @@ plot.dailychange <- function(x, y, size = 2.5, event = 50,
       ggplot2::geom_sf(data = point_sf, mapping = ggplot2::aes(
         colour = cut(
           x = EVENT500,
-          breaks = c(1, 5, 8, 10, 20, 60)
+          breaks = c(1, 5, 10, 15, 20, 90)
         )
       ), alpha = 1, size = size) +
       ggplot2::coord_sf(xlim = c(-125, -67), ylim = c(20, 50)) +
@@ -165,8 +165,8 @@ plot.dailychange <- function(x, y, size = 2.5, event = 50,
           "#FDE725FF"
         ),
         labels = c(
-          "(1, 5]", "(5, 8]", "(8, 10]", "(10, 20]",
-          "(20, 55]"
+          "(1, 5]", "(5, 10]", "(10, 15]", "(15, 20]",
+          "(20, 90]"
         )
       ) +
       ggplot2::labs(x = "")

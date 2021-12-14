@@ -14,7 +14,7 @@ fit_gp_gev <- function(list, type = "GEV") {
 
   # if GP is specified, fit a GP distribution to the observations
   if (type == "GP") {
-    if (list[[2]][, .N] < 30) {
+    if (list[[1]][, .N] < 30) {
 
       # return an empty data table when number of observations is less than 30
       df <- data.table(
@@ -68,11 +68,11 @@ fit_gp_gev <- function(list, type = "GEV") {
         NO_OF_OBSERVATIONS = nrow(list[[1]]),
         DAY_CHANGE = as.numeric(gsub("[^0-9.]", "", names(list)[[1]])),
         EVENT50 = y1[1] * 20.88543 * 0.00980665, # convert from mm to psf
-        ANNUAL_RATIO50 = y1[1] / y2[1] * 20.88543 * 0.00980665,
+        ANNUAL_RATIO50 = y1[1] / y2[1],
         EVENT100 = y1[2] * 20.88543 * 0.00980665,
-        ANNUAL_RATIO100 = y1[2] / y2[2] * 20.88543 * 0.00980665,
+        ANNUAL_RATIO100 = y1[2] / y2[2],
         EVENT500 = y1[3] * 20.88543 * 0.00980665,
-        ANNUAL_RATIO500 = y1[3] / y2[3] * 20.88543 * 0.00980665
+        ANNUAL_RATIO500 = y1[3] / y2[3]
       )
 
       return(df)
@@ -80,7 +80,7 @@ fit_gp_gev <- function(list, type = "GEV") {
   } else if (type == "GEV") {
 
     # if GEV is specified, fit a GEV distribution to the observations
-    if (list[[2]][, .N] < 30) {
+    if (list[[1]][, .N] < 30) {
 
       # return an empty data table when number of observations is less than 30
       df <- data.table(
@@ -136,11 +136,11 @@ fit_gp_gev <- function(list, type = "GEV") {
         NO_OF_OBSERVATIONS = nrow(list[[1]]),
         DAY_CHANGE = as.numeric(gsub("[^0-9.]", "", names(list)[[1]])),
         EVENT50 = y1[1] * 20.88543 * 0.00980665, # convert from mm to psf
-        ANNUAL_RATIO50 = y1[1] / y2[1] * 20.88543 * 0.00980665,
+        ANNUAL_RATIO50 = y1[1] / y2[1],
         EVENT100 = y1[2] * 20.88543 * 0.00980665,
-        ANNUAL_RATIO100 = y1[2] / y2[2] * 20.88543 * 0.00980665,
+        ANNUAL_RATIO100 = y1[2] / y2[2],
         EVENT500 = y1[3] * 20.88543 * 0.00980665,
-        ANNUAL_RATIO500 = y1[3] / y2[3] * 20.88543 * 0.00980665
+        ANNUAL_RATIO500 = y1[3] / y2[3]
       )
 
       return(df)
