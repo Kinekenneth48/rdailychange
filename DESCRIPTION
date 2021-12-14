@@ -45,3 +45,4 @@ Imports:
 VignetteBuilder: knitr
 LinkingTo: 
     Rcpp
+LazyDataCompression: xz
