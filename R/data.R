@@ -1,12 +1,11 @@
-#' Annual snow load maximums of Utah weather stations.
+#' Daily snow water equivalent (SWE) of 7 weather stations across the US.
 #'
-#' @description This data contains 15,172 seasonal snow load maximums of
-#' 389 weather stations in Utah. The snow load values are measured in
-#' kilopascal (kPa). For WESD measurements, the associated values represent
-#' the direct measurement of snow load while SNWD values represent an
-#' estimate of the snow load.
+#' @description This data contains 158,627 daily snow water equivalent (SWE) of
+#' 7 weather stations across the US from October 1, 1950, to June 30, 2020.
+#' The snow load values are measured in millimeters (mm). For each station,
+#' the data contains a complete coverage of the 70 snow seasons.
 #'
-#' @format A data frame with 16081 rows and 5 variables:
+#' @format A data frame with 158,627 rows and 7 variables:
 #' \describe{
 #'   \item{ID}{This represents the station's ID.}
 #'   \item{NAME}{Weather Station Name.}
@@ -24,15 +23,14 @@
 
 
 
-#' Annual snow load maximums of Utah weather stations.
+#' Daily snow water equivalent (SWE) of 100 weather stations across the US.
 #'
-#' @description This data contains 15,172 seasonal snow load maximums of
-#' 389 weather stations in Utah. The snow load values are measured in
-#' kilopascal (kPa). For WESD measurements, the associated values represent
-#' the direct measurement of snow load while SNWD values represent an
-#' estimate of the snow load.
+#' @description This data contains 2,547,600 daily snow water equivalent (SWE)
+#' of 100 weather stations across the US from October 1, 1950, to June 30, 2020.
+#' The snow load values are measured in millimeters (mm). For each station,
+#' the data contains a complete coverage of the 70 snow seasons.
 #'
-#' @format A data frame with 16081 rows and 5 variables:
+#' @format A data frame with 2,547,600 rows and 7 variables:
 #' \describe{
 #'   \item{ID}{This represents the station's ID.}
 #'   \item{NAME}{Weather Station Name.}

@@ -27,8 +27,8 @@
 #'
 #' @examples
 #' dx <- c(1, -3, 3, 1, 2, 3, 1, -7, 2, -1, -2, 3)
-#' d3_cands <- c(TRUE, FALSE, TRUE, TRUE, TRUE,
-#'               FALSE, TRUE, FALSE, FALSE, FALSE)
+#' d3_cands <- c(TRUE, FALSE, TRUE, TRUE, TRUE, FALSE, TRUE, FALSE, FALSE,
+#'  FALSE)
 #' calc_d3_method(d3_cands, dx)
 #'
 calc_d3_method <- function(d3_cands, dx) {
