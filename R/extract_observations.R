@@ -16,6 +16,10 @@
 #'   snow observations.
 #' @return A data table of measurement location's metadata and specified
 #' daily sequential observations.
+#'
+#' @example
+#' extract_observations(sample.data, day = 2)
+#'
 #' @export
 #' @import  data.table
 extract_observations <- function(df, day = 1, col_name = "SWE") {
