@@ -1,12 +1,7 @@
-
-
-# HELPER FUNCTION 3 #####
-# Because of HELPER FUNCTION 1, the HELPER FUNCTION 3 assumes to work with
-# raw observations with no consecutive 0's.
-
-# This function will take raw observations, make sure there is enough data to
-# perform the D3 Method (if not, it will return NULL), and then calculate
-# the D3 Method.
+#' @title d3_method_from_vector
+#' @description This function takes raw observations, make sure there is 
+#' enough data to perform the D3 Method (if not, it will return NULL), 
+#' and then calculate the D3 Method.
 d3_method_from_vector <- function(x) {
   n <- 3
   if (length(x) < n) {
@@ -20,7 +15,7 @@ d3_method_from_vector <- function(x) {
   }
 }
 
-#' Calculate D3 Method for Snow Loads
+#' @title Calculate D3 Method for Snow Loads
 #'
 #' @description Given a dataframe, a column of which includes snow observations,
 #'   this function will calculate the D3 Method.
@@ -31,7 +26,6 @@ d3_method_from_vector <- function(x) {
 #'
 #' @return A list of numeric vectors containing the observations
 #'   for the D3 Method (list split across 2 or more raw observations of 0).
-
 d3_method <- function(df, col_name = "SWE") {
   x <- df[[col_name]]
   split_observations <- split_across_n_m(x)
@@ -40,13 +34,6 @@ d3_method <- function(df, col_name = "SWE") {
   result <- result[!(is.na(result))]
   return(result)
 }
-
-
-
-
-
-
-
 
 #' @title Extract Day-3 method observations
 #' @description This function allows the user to extract sequential daily
