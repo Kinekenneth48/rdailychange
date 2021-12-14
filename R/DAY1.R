@@ -19,11 +19,15 @@ split_across_n_m <- function(x, n = 2, m = 0) {
 
 #' @title d1_method_from_vector
 #' @param x A sequential change of SWE values. This is a vector object.
-#' @description Helper Function 2 works in the same manner as Helper Function 1
+#' @description This function works in the same manner as Helper Function 1
 #' but this time time the vector x has no consecutive 0's. This function takes
-#' raw observations, make sure there is enough data to perform the D1 Method
-#' (if not, it will return NULL), and then calculate the D1 Method.
-
+#' vector x of raw observations with no consecutive 0's, make sure there is 
+#' enough data to perform the D1 Method (if not, it will return NULL), and then 
+#' calculate the D1 Method.
+#' @examples
+#' x <- c(1, 2, 0, 4, 5, 0, 3, 0, 2, 1, 3)
+#' d1_method_from_vector(x)
+                   
 d1_method_from_vector <- function(x) {
   if (length(x) < 1) {
     return(NULL)
@@ -37,7 +41,7 @@ d1_method_from_vector <- function(x) {
   return(result)
 }
 
-#' Calculate D1 Method for Snow Loads
+#' @title Calculate D1 Method for Snow Loads
 #'
 #' @description This function calculates the D1 Method.
 #'
@@ -47,6 +51,9 @@ d1_method_from_vector <- function(x) {
 #'
 #' @return A list of numeric vectors containing the observations
 #'   for the D1 Method (list split across 2 or more raw observations of 0).
+#' @examples
+#' x <- data.frame(SWE = c(1, 2, 0, 4, 5, 0, 3, 0, 2, 1, 3))
+#' d1_method(x)                  
 
 d1_method <- function(df, col_name = "SWE") {
   x <- df[[col_name]]
