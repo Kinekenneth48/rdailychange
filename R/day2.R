@@ -1,12 +1,7 @@
-
-
-# HELPER FUNCTION 3 #####
-# Because of HELPER FUNCTION 1, the HELPER FUNCTION 3 assumes to work with
-# raw observations with no consecutive 0's.
-
-# This function will take raw observations, make sure there is enough data to
-# perform the D2 Method (if not, it will return NULL), and then calculate
-# the D2 Method.
+#' @title d2_method_from_vector 
+#' @description This function take raw observations, make sure there is 
+#' enough data to perform the D2 Method (if not, it will return NULL), 
+#' and then calculate the D2 Method.
 d2_method_from_vector <- function(x) {
   n <- 2
   if (length(x) < n) {
@@ -22,10 +17,10 @@ d2_method_from_vector <- function(x) {
   return(result)
 }
 
-#' Calculate D2 Method for Snow Loads
+#' @title Calculate D2 Method for Snow Loads
 #'
 #' @description Given a dataframe, a column of which includes snow observations,
-#'   this function will calculate the D2 Method.
+#' this function will calculate the D2 Method.
 #'
 #' @param df The dataframe containing snow observations.
 #' @param col_name Character string of the column name containing the
@@ -42,12 +37,6 @@ d2_method <- function(df, col_name = "SWE") {
   result <- result[!(is.na(result))]
   return(result)
 }
-
-
-
-
-
-
 
 
 #' @title Extract Day-2 method observations
