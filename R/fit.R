@@ -8,11 +8,11 @@
 #' The default is GEV.
 #' @return A fit summary with measurement location metadata , MRIs and Annual
 #' MRI ratios.
+#' @example
+#' fit_observations(sample.list)
+#'
 #' @export fit_observations
 #' @export
-
-
-
 fit_observations <- function(list, type = "GEV") {
   fit_summary <- rbindlist(lapply(X = list, FUN = fit_gp_gev, type))
 
