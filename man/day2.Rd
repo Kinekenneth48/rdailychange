@@ -18,6 +18,7 @@ method observations, while the second element is the annual maximum load
 for each snow year.
 }
 \description{
-This function allows the user to extract sequential daily changes
+This function allows the user to extract sequential daily
+changes
 (Day-1 method) in SWE.
 }

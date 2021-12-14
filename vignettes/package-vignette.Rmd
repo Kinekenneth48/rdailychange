@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 
 Snow loads have long been a primary design consideration for roofs, but little work has been done to determine the unique interactions of snow and solar panels. It is crucial that solar panels in many portions of the United States be built to withstand severe winter weather. A combination of tilting angles and the insulating property of solar panels ensures that snow is melted off panels within days. This shedding phenomenon limits the amount of time that snow accumulates on the panel, which is a critical structural difference compared to non-slip roofing systems. This shedding phenomenon of snow on panels motivates the need for a method to mimic and analyze snow measurements as though it felt on a solar panel. 
 The <TT>rdailychange</TT> package provides a way to extract daily sequential changes, fit, and estimate ground snow load mean recurrence intervals (MRIs) for any weather station across the United States. The DAY-1 method assumes the shedding phenomenon of solar panels occurs daily, as such observations are daily sequential
-changes. On the other hand, the DAY-1,DAY-2, DAY-3, DAY-4, and DAY-5 method assume snow shedding occurs after two  three , fourth, and fifth day of continuous snow accumulation. A simple demonstration of the workflow underlying estimating MRI values from single and multiple-day snow accumulations is provided in this vignette for the 50 FOS. The package README also demonstrates this workflow by estimating MRI values for 7 FOS weather stations. 
+changes. On the other hand, DAY-2, DAY-3, DAY-4, and DAY-5 method assume snow shedding occurs after two, three, fourth, and fifth day of continuous snow accumulation. A simple demonstration of the workflow underlying estimating MRI values from single and multiple-day snow accumulations is provided in this vignette for the 100 randomly selected First-order stations(FOS). The package README also demonstrates this workflow by estimating MRI values for 7 FOS weather stations. 
 
 
 
@@ -31,16 +31,16 @@ changes. On the other hand, the DAY-1,DAY-2, DAY-3, DAY-4, and DAY-5 method assu
 
 ## Data
 
-The daily snow water equivalent of measurement stations used in this analysis was collected from the National Oceanic and Atmospheric Administration’s ([NOAA](https://www.ncdc.noaa.gov/cdo-web/search)) Global Historical Climatology Network using the snowload2 package. The data analysis will focus on snow water equivalent (SWE) for 251 National Weather Service First Order Stations (FOS) from October 1, 1950, to June 30, 2020, for a total of 70 snow seasons. Note that not all stations will have a total of 70 snow seasons. These data are included in the package and can be accessed with the commands
+The daily snow water equivalent of measurement stations used in this analysis was collected from the National Oceanic and Atmospheric Administration’s ([NOAA](https://www.ncdc.noaa.gov/cdo-web/search)) Global Historical Climatology Network using the snowload2 package. The data analysis will focus on snow water equivalent (SWE) for 100 National Weather Service First Order Stations (FOS) from October 1, 1950, to June 30, 2020, for a total of 70 snow seasons. Note that not all stations will have a total of 70 snow seasons. The data is included in the package and can be accessed with the commands
 
 
 ```{r}
 library(rdailychange)
-data("sample_data")
-head(sample_data)
+data("snow_daily")
+head(snow_daily)
 ```
 
-The following figure shows a map of 50 stations locations.The code for this map 
+The following figure shows the locations of the 100 stations on a US map. The code for this map 
 makes use of the ggplot2, sf, and dplyr package. 
 
 ```{r message=FALSE, warning=FALSE, fig.height = 6, fig.width = 6, fig.align = "center"}
@@ -50,7 +50,7 @@ library(dplyr)
 library(maptools)
 
 
-df = distinct(sample_data, ID, .keep_all = TRUE) %>%
+df = distinct(snow_daily, ID, .keep_all = TRUE) %>%
   select(LONGITUDE, LATITUDE)
 
  
@@ -69,27 +69,27 @@ plot_usmap("states") +
 Our goal is to mimic the snow shedding phenomenon on solar panel across the United States. Doing so 
 allows us to compare how sensitive are MRI values from a single day to multiple day accumulation. 
 The first step in the workflow is to extract the single and multiple-day observations.
-Using the <TT>extract_observations()</TT> function as demonstrated below a 
-list of list object is returned. Each list represents a weather station and within each list 
+Using the <TT>extract_observations()</TT> function as demonstrated below returns a
+list of list object. Each list represents a weather station and within each list 
 is the Day-X observations and the annual maximum snow loads. Note that as we move from
-a single to  multiple day the number of extracted observations reduce. 
+a single to  multiple day there is a reduction in the number of extracted observations. 
 
 
 
 ```{r}
 # extract single-day observations
-d1 = rdailychange::extract_observations(sample_data, day=1)
-d1[[1]][[1]]
+d1 = rdailychange::extract_observations(snow_daily, day=1)
+d1[[3]][[1]]
 
 
 # extract Day-2 observations
-d2 = rdailychange::extract_observations(sample_data, day=2)
-d2[[1]][[1]]
+d2 = rdailychange::extract_observations(snow_daily, day=2)
+d2[[3]][[1]]
 
 
 # extract Day-3 observations
-d3 = rdailychange::extract_observations(sample_data, day=3)
-d3[[1]][[1]]
+d3 = rdailychange::extract_observations(snow_daily, day=3)
+d3[[3]][[1]]
 ```
 
 * * * 
@@ -106,22 +106,22 @@ with their ratio with respective to the annual data.
 ```{r}
 d1_parm_gev = rdailychange::fit_observations(d1, type = "GEV")
 d1_parm_gp = rdailychange::fit_observations(d1, type = "GP")
-d1_parm_gev[1:2,]
-d1_parm_gp[1:2,]
+d1_parm_gev[1:5,]
+d1_parm_gp[1:5,]
 ```
 
 ```{r}
 d2_parm_gev = rdailychange::fit_observations(d2, type = "GEV")
 d2_parm_gp = rdailychange::fit_observations(d2, type = "GP")
-d2_parm_gev[1:2,]
-d2_parm_gp[1:2,]
+d2_parm_gev[1:5,]
+d2_parm_gp[1:5,]
 ```
 
 ```{r}
 d3_parm_gev = rdailychange::fit_observations(d3, type = "GEV")
 d3_parm_gp = rdailychange::fit_observations(d3, type = "GP")
-d3_parm_gev[1:2,]
-d3_parm_gp[1:2,]
+d3_parm_gev[1:5,]
+d3_parm_gp[1:5,]
 ```
 
 From the above output, we can see that fitting a GEV using a block-maxima approach or 
@@ -138,14 +138,17 @@ applied to multiple-day objects.
 
 ```{r fig.height = 6, fig.width = 6, fig.align = "center"}
 plot(d1_parm_gev, event = 50, annual = FALSE)
-
 ```
+
+
+The above plot shows that MRI values for low-elevation, mid-latitude locations are
+20 or fewer pounds per square foot(psf).
+
 
 ```{r fig.height = 6, fig.width = 6, fig.align = "center"}
 plot(d1_parm_gev, event = 50, annual = TRUE)
-
 ```
 
-
+From the above figure, we can see that the plot shows lower ratio values for northern stations. As we move towards the country's south, the ratio values increase from 0.2 to about 1. The plot pattern shows that stations farther south have similar short-term maximum snow load MRIs relative to their traditional design snow load standard.
 
 * * * 
