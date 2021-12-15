@@ -4,6 +4,9 @@
 #' the ends of which are positive, and at most one of the three middles is
 #' negative. This function takes the changes and returns a logical vector of
 #' TRUEs when at most one of the three middles is negative.
+#' @examples
+#' x <- sample(-20:20)
+#' middle_negative_test(x)
 middle_negative_test <- function(dx) {
   negs <- (dx[2:(length(dx) - 3)] < 0) + # First middle < 0 PLUS
     (dx[3:(length(dx) - 2)] < 0) + # Second middle < 0 PLUS
@@ -16,6 +19,10 @@ middle_negative_test <- function(dx) {
 #' @description This function will take raw observations, make sure there is
 #' enough data to perform the D5 Method (if not, it will return NULL), and then
 #' calculate the D5 Method.
+#' @examples
+#' x <- sample(-15:30)
+#' d5_method_from_vector(x)
+#'
 d5_method_from_vector <- function(x) {
   n <- 5
   if (length(x) < n) {
@@ -40,6 +47,21 @@ d5_method_from_vector <- function(x) {
 #'   snow observations.
 #' @return A list of numeric vectors containing the observations
 #'   for the D5 Method (list split across 2 or more raw observations of 0).
+#' @examples
+#' ID <- rep("USW00023062", 13)
+#' NAME <- rep("DENVER-STAPLETON", 13)
+#' STATE <- rep("CO", 13)
+#' LATITUDE <- rep(39.7633, 13)
+#' LONGITUDE <- rep(-104.8694, 13)
+#' DATE <- c(1950-11-08, 1950-11-09, 1950-11-10, 1950-11-11, 1950-11-12,
+#'           1950-11-13, 1950-12-05, 1950-12-06, 1950-12-07, 1950-12-08,
+#'           1951-01-06, 1951-01-07, 1951-01-08)
+#' SWE <- c(22.553862, 29.897561, 15.685390, 11.953282, 8.247274, 4.224420,
+#'          13.676186, 13.737334, 9.453138, 4.829772, 20.319270, 10.564117,
+#'       10.595503)
+#' sample_data <- data.frame(ID, NAME, STATE, LATITUDE, LONGITUDE, DATE, SWE)
+#' d5_method(sample_data, col_name = "SWE")
+#'
 d5_method <- function(df, col_name = "SWE") {
   x <- df[[col_name]]
   split_observations <- split_across_n_m(x)
@@ -56,6 +78,21 @@ d5_method <- function(df, col_name = "SWE") {
 #' @return A list with two elements. The first element is the Day-5
 #' method observations, while the second element is the annual maximum load
 #' for each snow year.
+#' @examples
+#' ID <- rep("USW00023062", 13)
+#' NAME <- rep("DENVER-STAPLETON", 13)
+#' STATE <- rep("CO", 13)
+#' LATITUDE <- rep(39.7633, 13)
+#' LONGITUDE <- rep(-104.8694, 13)
+#' DATE <- c(1950-11-08, 1950-11-09, 1950-11-10, 1950-11-11, 1950-11-12,
+#'           1950-11-13, 1950-12-05, 1950-12-06, 1950-12-07, 1950-12-08,
+#'           1951-01-06, 1951-01-07, 1951-01-08)
+#' SWE <- c(22.553862, 29.897561, 15.685390, 11.953282, 8.247274, 4.224420,
+#'          13.676186, 13.737334, 9.453138, 4.829772, 20.319270, 10.564117,
+#'       10.595503)
+#' sample_data <- data.frame(ID, NAME, STATE, LATITUDE, LONGITUDE, DATE, SWE)
+#' day5(sample_data, col_name = "SWE")
+#'
 day5 <- function(station_data, col_name) {
 
   # set data frame as data.table
