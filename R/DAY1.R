@@ -7,7 +7,8 @@
 #' @description This function takes a vector x of raw snow observations and
 #' split the vector across n or more m's into a list of vectors.
 #'
-#' @examples x <- c(1, 2, 0, 0, 0, 4, 5, 0, 3, 0, 0, 2, 1, 3)
+#' @examples
+#' x <- c(1, 2, 0, 0, 0, 4, 5, 0, 3, 0, 0, 2, 1, 3)
 #' split_across_n_m(x)
 
 split_across_n_m <- function(x, n = 2, m = 0) {
@@ -21,13 +22,13 @@ split_across_n_m <- function(x, n = 2, m = 0) {
 #' @param x A sequential change of SWE values. This is a vector object.
 #' @description This function works in the same manner as Helper Function 1
 #' but this time time the vector x has no consecutive 0's. This function takes
-#' vector x of raw observations with no consecutive 0's, make sure there is 
-#' enough data to perform the D1 Method (if not, it will return NULL), and then 
+#' vector x of raw observations with no consecutive 0's, make sure there is
+#' enough data to perform the D1 Method (if not, it will return NULL), and then
 #' calculate the D1 Method.
 #' @examples
 #' x <- c(1, 2, 0, 4, 5, 0, 3, 0, 2, 1, 3)
 #' d1_method_from_vector(x)
-                   
+
 d1_method_from_vector <- function(x) {
   if (length(x) < 1) {
     return(NULL)
@@ -52,8 +53,19 @@ d1_method_from_vector <- function(x) {
 #' @return A list of numeric vectors containing the observations
 #'   for the D1 Method (list split across 2 or more raw observations of 0).
 #' @examples
-#' x <- data.frame(SWE = c(1, 2, 0, 4, 5, 0, 3, 0, 2, 1, 3))
-#' d1_method(x)                  
+#' ID <- rep("USW00023062", 13)
+#' NAME <- rep("DENVER-STAPLETON", 13)
+#' STATE <- rep("CO", 13)
+#' LATITUDE <- rep(39.7633, 13)
+#' LONGITUDE <- rep(-104.8694, 13)
+#' DATE <- c(1950-11-08, 1950-11-09, 1950-11-10, 1950-11-11, 1950-11-12,
+#'           1950-11-13, 1950-12-05, 1950-12-06, 1950-12-07, 1950-12-08,
+#'           1951-01-06, 1951-01-07, 1951-01-08)
+#' SWE <- c(22.553862, 29.897561, 15.685390, 11.953282, 8.247274, 4.224420,
+#'          13.676186, 13.737334, 9.453138, 4.829772, 20.319270, 10.564117,
+#'       10.595503)
+#' sample_data <- data.frame(ID, NAME, STATE, LATITUDE, LONGITUDE, DATE, SWE)
+#' d1_method(sample_data)
 
 d1_method <- function(df, col_name = "SWE") {
   x <- df[[col_name]]
@@ -74,6 +86,20 @@ d1_method <- function(df, col_name = "SWE") {
 #' @return A list with two elements. The first element is the Day-1
 #' method observations, while the second element is the annual maximum load
 #' for each snow year.
+#' @examples
+#' ID <- rep("USW00023062", 13)
+#' NAME <- rep("DENVER-STAPLETON", 13)
+#' STATE <- rep("CO", 13)
+#' LATITUDE <- rep(39.7633, 13)
+#' LONGITUDE <- rep(-104.8694, 13)
+#' DATE <- c(1950-11-08, 1950-11-09, 1950-11-10, 1950-11-11, 1950-11-12,
+#'           1950-11-13, 1950-12-05, 1950-12-06, 1950-12-07, 1950-12-08,
+#'           1951-01-06, 1951-01-07, 1951-01-08)
+#' SWE <- c(22.553862, 29.897561, 15.685390, 11.953282, 8.247274, 4.224420,
+#'          13.676186, 13.737334, 9.453138, 4.829772, 20.319270, 10.564117,
+#'       10.595503)
+#' sample_data <- data.frame(ID, NAME, STATE, LATITUDE, LONGITUDE, DATE, SWE)
+#' day1(sample_data, col_name = "SWE")
 
 day1 <- function(station_data, col_name) {
 
