@@ -33,7 +33,7 @@ using namespace Rcpp;
 //' dx <- c(1, -3, 3, 1, 2, 3, 1, -7, 2, -1, -2, 3)
 //' d5_cands <- c(TRUE, FALSE, TRUE, FALSE, TRUE,
 //'               FALSE, FALSE, FALSE)
-//' calc_d5_method(d5_cands, dx)
+//' rdailychange:::calc_d5_method(d5_cands, dx)
 //'
 // [[Rcpp::export]]
 NumericVector calc_d5_method(LogicalVector d5_cands,

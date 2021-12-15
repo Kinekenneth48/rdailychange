@@ -6,7 +6,11 @@
 \alias{rdailychange-package}
 \title{rdailychange: Daily Change Method for Spatial Data}
 \description{
-Spatial analysis of daily snow water equivalent (SWE). You provide the spatial data in a data frame with SWE and other specified columns, tell "rdailychange" which daily change to extract, which distribution(GEV or GP) to fit to the extracted observations, and how to map the ground snow load mean recurrence intervals (MRIs) or return levels.
+Spatial analysis of daily snow water equivalent (SWE). You provide 
+    the spatial data in a data frame with SWE and other specified columns, tell 
+    "rdailychange" which daily change to extract, which distribution(GEV or GP) 
+    to fit to the  extracted observations, and how to map the ground snow load 
+    mean recurrence intervals (MRIs) or return levels.
 }
 \author{
 \strong{Maintainer}: Kenneth Kin Pomeyie \email{kinekenneth48@gmail.com}

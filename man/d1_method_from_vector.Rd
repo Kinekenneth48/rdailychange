@@ -10,8 +10,13 @@ d1_method_from_vector(x)
 \item{x}{A sequential change of SWE values. This is a vector object.}
 }
 \description{
-Helper Function 2 works in the same manner as Helper Function 1
+This function works in the same manner as Helper Function 1
 but this time time the vector x has no consecutive 0's. This function takes
-raw observations, make sure there is enough data to perform the D1 Method
-(if not, it will return NULL), and then calculate the D1 Method.
+vector x of raw observations with no consecutive 0's, make sure there is
+enough data to perform the D1 Method (if not, it will return NULL), and then
+calculate the D1 Method.
+}
+\examples{
+x <- c(1, 2, 0, 4, 5, 0, 3, 0, 2, 1, 3)
+rdailychange:::d1_method_from_vector(x)
 }

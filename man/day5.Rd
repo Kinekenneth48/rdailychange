@@ -21,3 +21,9 @@ for each snow year.
 This function allows the user to extract sequential daily
 changes (Day-1 method) in SWE.
 }
+\examples{
+sample_data <- rdailychange::sample_data
+sample_data <- sample_data[ID == "USW00023062"]
+rdailychange:::day5(sample_data, col_name = "SWE")
+
+}

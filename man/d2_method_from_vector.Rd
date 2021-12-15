@@ -14,3 +14,7 @@ This function take raw observations, make sure there is
 enough data to perform the D2 Method (if not, it will return NULL),
 and then calculate the D2 Method.
 }
+\examples{
+x <- sample(-5:9)
+rdailychange:::d2_method_from_vector(x)
+}

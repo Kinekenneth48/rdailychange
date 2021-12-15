@@ -32,7 +32,7 @@ using namespace Rcpp;
 //' dx <- c(1, -3, 3, 1, 2, 3, 1, -7, 2, -1, -2, 3)
 //' d4_cands <- c(TRUE, FALSE, TRUE, TRUE, FALSE,
 //'               TRUE, FALSE, FALSE, TRUE)
-//' calc_d4_method(d4_cands, dx)
+//' rdailychange:::calc_d4_method(d4_cands, dx)
 //'
 // [[Rcpp::export]]
 NumericVector calc_d4_method(LogicalVector d4_cands,

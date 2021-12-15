@@ -37,6 +37,6 @@ as an index of dx can be used in a sum only once.
 dx <- c(1, -3, 3, 1, 2, 3, 1, -7, 2, -1, -2, 3)
 d3_cands <- c(TRUE, FALSE, TRUE, TRUE, TRUE, FALSE, TRUE, FALSE, FALSE,
  FALSE)
-calc_d3_method(d3_cands, dx)
+rdailychange:::calc_d3_method(d3_cands, dx)
 
 }

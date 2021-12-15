@@ -6,7 +6,7 @@
 #' TRUEs when at most one of the two middles is negative.
 #' @examples
 #' x <- c(1, -2, -1, 0, 0, -4, 5, 0, 3, -1, 0, -2, -1, 3)
-#' middle_negative_test(x)
+#' rdailychange:::middle_negative_test(x)
 middle_negative_test <- function(dx) { # n = 2 only
   negs <- (dx[2:(length(dx) - 2)] < 0) + # First middle < 0 PLUS
     (dx[3:(length(dx) - 1)] < 0) # Second middle < 0
@@ -20,7 +20,7 @@ middle_negative_test <- function(dx) { # n = 2 only
 #' then calculate the D4 Method.
 #' @examples
 #' x <- c(1, -2, -1, 0, 0, -4, 5, 0, 3, -1, 0, -2, -1, 3)
-#' d4_method_from_vector(x)
+#' rdailychange:::d4_method_from_vector(x)
 d4_method_from_vector <- function(x) {
   n <- 4
   if (length(x) < n) {
@@ -56,7 +56,7 @@ d4_method_from_vector <- function(x) {
 #'          13.676186, 13.737334, 9.453138, 4.829772, 20.319270, 10.564117,
 #'       10.595503)
 #' sample_data <- data.frame(ID, NAME, STATE, LATITUDE, LONGITUDE, DATE, SWE)
-#' d4_method(sample_data)
+#' rdailychange:::d4_method(sample_data)
 #'
 #' @export
 d4_method <- function(df, col_name = "SWE") {
@@ -79,19 +79,9 @@ d4_method <- function(df, col_name = "SWE") {
 #' for each snow year.
 #'
 #' @examples
-#' ID <- rep("USW00023062", 13)
-#' NAME <- rep("DENVER-STAPLETON", 13)
-#' STATE <- rep("CO", 13)
-#' LATITUDE <- rep(39.7633, 13)
-#' LONGITUDE <- rep(-104.8694, 13)
-#' DATE <- c(1950-11-08, 1950-11-09, 1950-11-10, 1950-11-11, 1950-11-12,
-#'           1950-11-13, 1950-12-05, 1950-12-06, 1950-12-07, 1950-12-08,
-#'           1951-01-06, 1951-01-07, 1951-01-08)
-#' SWE <- c(22.553862, 29.897561, 15.685390, 11.953282, 8.247274, 4.224420,
-#'          13.676186, 13.737334, 9.453138, 4.829772, 20.319270, 10.564117,
-#'       10.595503)
-#' sample_data <- data.frame(ID, NAME, STATE, LATITUDE, LONGITUDE, DATE, SWE)
-#' day4(sample_data, col_name = "SWE")
+#' sample_data <- rdailychange::sample_data
+#' sample_data <- sample_data[ID == "USW00023062"]
+#' rdailychange:::day4(sample_data, col_name = "SWE")
 #'
 day4 <- function(station_data, col_name) {
 

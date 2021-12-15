@@ -13,4 +13,7 @@ d3_method_from_vector(x)
 This function takes raw observations, make sure there is
 enough data to perform the D3 Method (if not, it will return NULL),
 and then calculate the D3 Method.
+#' @examples
+x <- c(1, -2, 1, 0, 5, 4, 5, 7, 3, 0, 0, 2, 1, 3)
+rdailychange:::d3_method_from_vector(x)
 }

@@ -31,3 +31,9 @@ they allow for at most one middle sequential change to be a negative value as
 long as the sum of the other sequential daily changes are greater than the
 negative change.
 }
+\examples{
+sample_data <- rdailychange::sample_data
+sample_data <- sample_data[ID == "USW00023062"]
+rdailychange:::extract_observations(sample_data, day = 2)
+
+}

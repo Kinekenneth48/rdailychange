@@ -22,3 +22,10 @@ This function allows the user to fit a Generalized Extreme Value
 extracted observations. The function does not fit Measurement locations
 with less than 30.
 }
+\examples{
+sample_data <- rdailychange::sample_data
+sample_data <- sample_data[ID == "USW00023062"]
+t <- extract_observations(sample_data, day = 2)
+rdailychange:::fit_observations(t)
+
+}

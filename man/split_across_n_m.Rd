@@ -21,5 +21,5 @@ split the vector across n or more m's into a list of vectors.
 }
 \examples{
 x <- c(1, 2, 0, 0, 0, 4, 5, 0, 3, 0, 0, 2, 1, 3)
-split_across_n_m(x)
+rdailychange:::split_across_n_m(x)
 }

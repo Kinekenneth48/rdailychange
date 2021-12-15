@@ -32,3 +32,11 @@ USA map of MRIs or Annual MRIs Ratio.
 \description{
 This function plots the MRIs or Annual MRIs Ratio on a USA map.
 }
+\examples{
+sample_data <- rdailychange::sample_data
+sample_data <- sample_data[ID == "USW00023062"]
+x <- extract_observations(sample_data, day = 2)
+y <- fit_observations(x)
+rdailychange:::plot.dailychange(y)
+
+}

@@ -14,3 +14,7 @@ This function will take raw observations, make sure there is
 enough data to perform the D4 Method (if not, it will return NULL), and
 then calculate the D4 Method.
 }
+\examples{
+x <- c(1, -2, -1, 0, 0, -4, 5, 0, 3, -1, 0, -2, -1, 3)
+rdailychange:::d4_method_from_vector(x)
+}

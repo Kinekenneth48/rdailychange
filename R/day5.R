@@ -1,4 +1,4 @@
-#' @title middle_negative_test
+#' @title middle_negative_test2
 #' @param dx A sequential change of SWE values. This is a vector object.
 #' @description For the D4 Method, we need to have five consecutive changes,
 #' the ends of which are positive, and at most one of the three middles is
@@ -6,8 +6,8 @@
 #' TRUEs when at most one of the three middles is negative.
 #' @examples
 #' x <- sample(-20:20)
-#' middle_negative_test(x)
-middle_negative_test <- function(dx) {
+#' rdailychange:::middle_negative_test2(x)
+middle_negative_test2 <- function(dx) {
   negs <- (dx[2:(length(dx) - 3)] < 0) + # First middle < 0 PLUS
     (dx[3:(length(dx) - 2)] < 0) + # Second middle < 0 PLUS
     (dx[4:(length(dx) - 1)] < 0) # Third middle < 0
@@ -21,7 +21,7 @@ middle_negative_test <- function(dx) {
 #' calculate the D5 Method.
 #' @examples
 #' x <- sample(-15:30)
-#' d5_method_from_vector(x)
+#' rdailychange:::d5_method_from_vector(x)
 #'
 d5_method_from_vector <- function(x) {
   n <- 5
@@ -32,7 +32,7 @@ d5_method_from_vector <- function(x) {
   x <- append(0, x) # made change
   dx <- x[-1] - x[-length(x)]
   d5_cands <- (dx[1:(length(dx) - (n - 1))] > 0 & dx[n:length(dx)] > 0) &
-    middle_negative_test(dx)
+    middle_negative_test2(dx)
   result <- calc_d5_method(d5_cands, dx)
   result <- unlist(result) # made change
   result <- result[!(is.na(result))]
@@ -60,7 +60,7 @@ d5_method_from_vector <- function(x) {
 #'          13.676186, 13.737334, 9.453138, 4.829772, 20.319270, 10.564117,
 #'       10.595503)
 #' sample_data <- data.frame(ID, NAME, STATE, LATITUDE, LONGITUDE, DATE, SWE)
-#' d5_method(sample_data, col_name = "SWE")
+#' rdailychange:::d5_method(sample_data, col_name = "SWE")
 #'
 d5_method <- function(df, col_name = "SWE") {
   x <- df[[col_name]]
@@ -79,19 +79,9 @@ d5_method <- function(df, col_name = "SWE") {
 #' method observations, while the second element is the annual maximum load
 #' for each snow year.
 #' @examples
-#' ID <- rep("USW00023062", 13)
-#' NAME <- rep("DENVER-STAPLETON", 13)
-#' STATE <- rep("CO", 13)
-#' LATITUDE <- rep(39.7633, 13)
-#' LONGITUDE <- rep(-104.8694, 13)
-#' DATE <- c(1950-11-08, 1950-11-09, 1950-11-10, 1950-11-11, 1950-11-12,
-#'           1950-11-13, 1950-12-05, 1950-12-06, 1950-12-07, 1950-12-08,
-#'           1951-01-06, 1951-01-07, 1951-01-08)
-#' SWE <- c(22.553862, 29.897561, 15.685390, 11.953282, 8.247274, 4.224420,
-#'          13.676186, 13.737334, 9.453138, 4.829772, 20.319270, 10.564117,
-#'       10.595503)
-#' sample_data <- data.frame(ID, NAME, STATE, LATITUDE, LONGITUDE, DATE, SWE)
-#' day5(sample_data, col_name = "SWE")
+#' sample_data <- rdailychange::sample_data
+#' sample_data <- sample_data[ID == "USW00023062"]
+#' rdailychange:::day5(sample_data, col_name = "SWE")
 #'
 day5 <- function(station_data, col_name) {
 

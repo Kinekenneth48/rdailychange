@@ -14,3 +14,8 @@ This function will take raw observations, make sure there is
 enough data to perform the D5 Method (if not, it will return NULL), and then
 calculate the D5 Method.
 }
+\examples{
+x <- sample(-15:30)
+rdailychange:::d5_method_from_vector(x)
+
+}

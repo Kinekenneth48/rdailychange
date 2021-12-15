@@ -29,7 +29,7 @@
 #' dx <- c(1, -3, 3, 1, 2, 3, 1, -7, 2, -1, -2, 3)
 #' d3_cands <- c(TRUE, FALSE, TRUE, TRUE, TRUE, FALSE, TRUE, FALSE, FALSE,
 #'  FALSE)
-#' calc_d3_method(d3_cands, dx)
+#' rdailychange:::calc_d3_method(d3_cands, dx)
 #'
 calc_d3_method <- function(d3_cands, dx) {
     .Call(`_rdailychange_calc_d3_method`, d3_cands, dx)
@@ -66,7 +66,7 @@ calc_d3_method <- function(d3_cands, dx) {
 #' dx <- c(1, -3, 3, 1, 2, 3, 1, -7, 2, -1, -2, 3)
 #' d4_cands <- c(TRUE, FALSE, TRUE, TRUE, FALSE,
 #'               TRUE, FALSE, FALSE, TRUE)
-#' calc_d4_method(d4_cands, dx)
+#' rdailychange:::calc_d4_method(d4_cands, dx)
 #'
 calc_d4_method <- function(d4_cands, dx) {
     .Call(`_rdailychange_calc_d4_method`, d4_cands, dx)
@@ -104,7 +104,7 @@ calc_d4_method <- function(d4_cands, dx) {
 #' dx <- c(1, -3, 3, 1, 2, 3, 1, -7, 2, -1, -2, 3)
 #' d5_cands <- c(TRUE, FALSE, TRUE, FALSE, TRUE,
 #'               FALSE, FALSE, FALSE)
-#' calc_d5_method(d5_cands, dx)
+#' rdailychange:::calc_d5_method(d5_cands, dx)
 #'
 calc_d5_method <- function(d5_cands, dx) {
     .Call(`_rdailychange_calc_d5_method`, d5_cands, dx)
@@ -137,7 +137,7 @@ calc_d5_method <- function(d5_cands, dx) {
 #' @examples
 #' d2_cands <- c(TRUE, FALSE, TRUE, TRUE, TRUE, TRUE,
 #'               TRUE, FALSE, TRUE, TRUE, FALSE)
-#' purge_d2_cands(d2_cands)
+#' rdailychange:::purge_d2_cands(d2_cands)
 purge_d2_cands <- function(d2_cands) {
     .Call(`_rdailychange_purge_d2_cands`, d2_cands)
 }
