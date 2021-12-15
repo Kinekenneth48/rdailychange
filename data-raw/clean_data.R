@@ -5,7 +5,8 @@
 library(data.table)
 
 
-# The raw data and station data can be download from ....
+# The raw data and station data can be download from the National Weather
+# Service website or through the snowload2 r package.
 raw_data <- data.table::fread("data-raw/fos_data.csv")
 stations <- data.table::fread("data-raw/stations.csv")
 
@@ -81,13 +82,8 @@ wesd_conversion <- function(station_data) {
   DT <- merge.data.table(DT, swe, by = "DATE", all.x = TRUE)
 
 
-
-
-
   # R1: replace zero wesd with NA when snwd is positive
   DT[, SWE := ifelse(SNWD > 0 & SWE == 0, NA, SWE)]
-
-
 
 
   # impute the missing SWE values with SNWD using the Hill's method. The hill
